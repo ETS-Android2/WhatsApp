@@ -85,6 +85,7 @@
                 if((snapshot.child("name").exists()))
                 {
                   //  Toast.makeText(getApplicationContext(), "Welcome", Toast.LENGTH_SHORT).show();
+                    //hello
                 }
                 else
                 {
