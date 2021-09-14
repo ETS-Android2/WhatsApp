@@ -6,17 +6,26 @@
     android:id="@+id/settings_relative"
     android:layout_height="match_parent"
     tools:context=".Settings.SettingsActivity">
-
+    <include
+        android:id="@+id/settings_activity_toolbar"
+        layout="@layout/app_bar_layout"/>
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profile_image"
         android:layout_width="250dp"
         android:layout_height="250dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="45dp"
+        android:layout_marginTop="90dp"
         android:src="@drawable/profile_image"
         app:civ_border_color="@color/colorPrimaryDark"
         app:civ_border_width="2dp" />
+
+    <androidx.constraintlayout.utils.widget.ImageFilterView
+        android:id="@+id/demoprof"
+        android:background="@drawable/edittext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/profile_image" />
 
     <EditText
         android:id="@+id/set_user_name"
@@ -36,23 +45,24 @@
         android:textStyle="bold">
 
     </EditText>
+
+
     <EditText
+        android:id="@+id/set_user_status"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/set_user_name"
-        android:id="@+id/set_user_status"
-        android:inputType="textMultiLine"
-        android:hint="Hey ! I am available now ."
-        android:textAlignment="center"
-        android:drawableStart="@drawable/edit_status"
-        android:textColor="@color/colorPrimaryDark"
-        android:textStyle="bold"
-        android:background="@drawable/edittext"
         android:layout_marginStart="15dp"
-        android:layout_marginEnd="15dp"
-        android:padding="6dp"
         android:layout_marginTop="20dp"
-        >
+        android:layout_marginEnd="15dp"
+        android:background="@drawable/edittext"
+        android:drawableStart="@drawable/edit_status"
+        android:hint="Hey ! I am available now ."
+        android:inputType="textMultiLine"
+        android:padding="6dp"
+        android:textAlignment="center"
+        android:textColor="@color/colorPrimaryDark"
+        android:textStyle="bold">
 
     </EditText>
 

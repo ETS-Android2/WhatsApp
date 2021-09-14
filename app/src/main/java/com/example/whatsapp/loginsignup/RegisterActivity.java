@@ -1,6 +1,9 @@
 package com.example.whatsapp.loginsignup;
 
+import android.app.Notification;
+import android.app.NotificationManager;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -23,6 +26,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.Objects;
 
@@ -78,15 +82,28 @@ public class RegisterActivity extends AppCompatActivity {
             progressDialog.setMessage("PLease Wait , While we are creating new account for you ...");
             progressDialog.setCanceledOnTouchOutside(true);
             progressDialog.show();
+            final String[] deviceToken = new String[1];
             auth.createUserWithEmailAndPassword(userEmail,userPassword).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
 
                 public void onComplete(@NonNull Task<AuthResult> task) {
                          if(task.isSuccessful())
                          {
+                             final String[] deviceToken = new String[1];
+                             FirebaseMessaging.getInstance().getToken()
+                                     .addOnCompleteListener(new OnCompleteListener<String>() {
+                                         @Override
+                                         public void onComplete(@NonNull Task<String> task) {
+                                             deviceToken[0] = task.getResult();
+
+                                         }
+                                     });
 
                              String currentUserID= auth.getCurrentUser().getUid();
                              RootRef.child("Users").child(currentUserID).setValue("");
+                             RootRef.child("Users").child(currentUserID).child("device_token")
+                                     .setValue(deviceToken[0]);
+
                              SendUserMainActivity();
                              Toast.makeText(getApplicationContext() , "Account Created Successfully !" + currentUserID, Toast.LENGTH_SHORT).show();                   }
                          else

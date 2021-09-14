@@ -44,8 +44,8 @@ public class PhoneLogInActivity extends AppCompatActivity {
         setContentView(R.layout.activity_phone_log_in);
         Initialise();
         mAuth=FirebaseAuth.getInstance();
-        Verify.setVisibility(View.GONE);
-        InputVerification.setVisibility(View.GONE);
+        Verify.setVisibility(View.INVISIBLE);
+        InputVerification.setVisibility(View.INVISIBLE);
         InputPhoneNumber.setVisibility(View.VISIBLE);
         SendVerificationCode.setVisibility(View.VISIBLE);
         progressDialog=new ProgressDialog(this);
@@ -90,8 +90,8 @@ public class PhoneLogInActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Invalid Phone Number , please enter correct phone number"+e.toString(), Toast.LENGTH_SHORT).show();
                 SendVerificationCode.setVisibility(View.VISIBLE);
                 InputPhoneNumber.setVisibility(View.VISIBLE );
-                Verify.setVisibility(View.GONE);
-                InputVerification.setVisibility(View.GONE);
+                Verify.setVisibility(View.INVISIBLE);
+                InputVerification.setVisibility(View.INVISIBLE);
                 if (e instanceof FirebaseAuthInvalidCredentialsException) {
                     // Invalid request
                     Toast.makeText(getApplicationContext(), "Invalid Request : "+ e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
@@ -110,8 +110,8 @@ public class PhoneLogInActivity extends AppCompatActivity {
                 mResendToken=token;
                 progressDialog.dismiss();
                 Toast.makeText(getApplicationContext(), "Code Sent", Toast.LENGTH_SHORT).show();
-                SendVerificationCode.setVisibility(View.GONE);
-                InputPhoneNumber.setVisibility(View.GONE);
+                SendVerificationCode.setVisibility(View.INVISIBLE);
+                InputPhoneNumber.setVisibility(View.INVISIBLE);
                 Verify.setVisibility(View.VISIBLE);
                 InputVerification.setVisibility(View.VISIBLE);
             }
@@ -121,8 +121,8 @@ public class PhoneLogInActivity extends AppCompatActivity {
         Verify.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SendVerificationCode.setVisibility(View.GONE);
-                InputPhoneNumber.setVisibility(View.GONE );
+                SendVerificationCode.setVisibility(View.INVISIBLE);
+                InputPhoneNumber.setVisibility(View.INVISIBLE );
                 String verificationCode=InputVerification.getText().toString();
                 if(TextUtils.isEmpty(verificationCode))
                 {

@@ -9,6 +9,7 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import com.example.whatsapp.fragments.ChatFragment;
 import com.example.whatsapp.fragments.ContactsFragment;
 import com.example.whatsapp.fragments.GroupFragment;
+import com.example.whatsapp.fragments.RequestFragment;
 
 
 public class TabAceesorAdapter extends FragmentPagerAdapter {
@@ -31,6 +32,9 @@ public class TabAceesorAdapter extends FragmentPagerAdapter {
             case 2 :
                 ContactsFragment contactsFragment= new ContactsFragment();
                 return contactsFragment;
+            case 3 :
+                RequestFragment requestFragment= new RequestFragment();
+                return requestFragment;
             default:
                 return null;
 
@@ -39,7 +43,7 @@ public class TabAceesorAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return 3;
+        return 4;
     }
 
     @Nullable
@@ -54,6 +58,8 @@ public class TabAceesorAdapter extends FragmentPagerAdapter {
                 return "Groups";
             case 2 :
                 return "Contacts";
+            case 3 :
+                return "Requests";
             default:
                 return null;
 

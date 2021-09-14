@@ -1,5 +1,6 @@
  package com.example.whatsapp;
 
+ import android.app.ProgressDialog;
  import android.content.DialogInterface;
  import android.content.Intent;
  import android.os.Bundle;
@@ -31,6 +32,9 @@
  import com.google.firebase.database.FirebaseDatabase;
  import com.google.firebase.database.ValueEventListener;
 
+ import java.text.SimpleDateFormat;
+ import java.util.Calendar;
+ import java.util.HashMap;
  import java.util.Objects;
 
  public class MainActivity extends AppCompatActivity {
@@ -38,7 +42,7 @@
    ViewPager mainViewPager;
    TabLayout mainTabLayout;
    TabAceesorAdapter mainTabAcc;
-   FirebaseUser currentUser;
+   ProgressDialog pd;
    FirebaseAuth mauth;
    DatabaseReference RootRef;
 
@@ -46,12 +50,7 @@
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mauth = FirebaseAuth.getInstance();
-        currentUser = mauth.getCurrentUser();
         RootRef= FirebaseDatabase.getInstance().getReference();
-        if (currentUser == null) {
-            sendUserToLOginActivity();
-        }
-        else {
             setContentView(R.layout.activity_main);
             mainToolBar = findViewById(R.id.main_page_toolbar);
             mainViewPager = findViewById(R.id.man_tab_viewpager);
@@ -62,20 +61,98 @@
             mainTabLayout.setupWithViewPager(mainViewPager
             );
             Objects.requireNonNull(getSupportActionBar()).setTitle("Whatsapp");
-        }
+
     }
      @Override
      protected void onStart() {
          super.onStart();
+         FirebaseUser currentUser=mauth.getCurrentUser();
          if(currentUser==null)
          {
+             mauth.signOut();
              sendUserToLOginActivity();
          }
          else
          {
+             pd = new ProgressDialog(MainActivity.this);
+             pd.setTitle("Please Wait");
+             pd.setMessage("While we are loading your chats...");
+             pd.setCanceledOnTouchOutside(false);
+             pd.show();
+             updateUserStatusStart("online");
              VerifyUserExistence();
          }
      }
+
+     @Override
+     protected void onPause() {
+         super.onPause();
+         FirebaseUser currentUser=mauth.getCurrentUser();
+         if (currentUser != null)
+         {
+             updateUserStatus("offline");
+         }
+     }
+
+     @Override
+     protected void onRestart() {
+         super.onRestart();
+         FirebaseUser currentUser=mauth.getCurrentUser();
+         if (currentUser != null)
+         {
+             updateUserStatus("online");
+         }
+     }
+
+     private void updateUserStatusStart(String state)
+     {  FirebaseUser currentUser=mauth.getCurrentUser();
+         String saveCurrentTime, saveCurrentDate;
+         String currentUserID=currentUser.getUid();
+         Calendar calendar = Calendar.getInstance();
+
+         SimpleDateFormat currentDate = new SimpleDateFormat("MMM dd, yyyy");
+         saveCurrentDate = currentDate.format(calendar.getTime());
+
+         SimpleDateFormat currentTime = new SimpleDateFormat("hh:mm a");
+         saveCurrentTime = currentTime.format(calendar.getTime());
+
+         HashMap<String, Object> onlineStateMap = new HashMap<>();
+         onlineStateMap.put("time", saveCurrentTime);
+         onlineStateMap.put("date", saveCurrentDate);
+         onlineStateMap.put("state", state);
+
+         RootRef.child("Users").child(currentUserID).child("userState")
+                 .updateChildren(onlineStateMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+             @Override
+             public void onComplete(@NonNull Task<Void> task) {
+                 pd.cancel();
+             }
+         });
+
+     }
+     private void updateUserStatus(String state)
+     {  FirebaseUser currentUser=mauth.getCurrentUser();
+         String saveCurrentTime, saveCurrentDate;
+         String currentUserID=currentUser.getUid();
+         Calendar calendar = Calendar.getInstance();
+
+         SimpleDateFormat currentDate = new SimpleDateFormat("MMM dd, yyyy");
+         saveCurrentDate = currentDate.format(calendar.getTime());
+
+         SimpleDateFormat currentTime = new SimpleDateFormat("hh:mm a");
+         saveCurrentTime = currentTime.format(calendar.getTime());
+
+         HashMap<String, Object> onlineStateMap = new HashMap<>();
+         onlineStateMap.put("time", saveCurrentTime);
+         onlineStateMap.put("date", saveCurrentDate);
+         onlineStateMap.put("state", state);
+
+         RootRef.child("Users").child(currentUserID).child("userState")
+                 .updateChildren(onlineStateMap);
+
+     }
+
+
 
      public void VerifyUserExistence() {
         String currentUserId=mauth.getCurrentUser().getUid();
@@ -108,6 +185,11 @@
          a.addCategory(Intent.CATEGORY_HOME);
          a.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
          startActivity(a);
+         FirebaseUser currentUser=mauth.getCurrentUser();
+         if (currentUser != null)
+         {
+             updateUserStatus("offline");
+         }
      }
 
      private void sendUserToLOginActivity() {
@@ -118,9 +200,11 @@
      }
      private void sendUserToSeetingsActivity() {
          Intent mainIntent = new Intent(MainActivity.this, SettingsActivity.class);
-         mainIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
          startActivity(mainIntent);
-         finish();
+     }
+     private void sendUserToFFActivity() {
+         Intent mainIntent = new Intent(MainActivity.this, FindFriendsActivity.class);
+         startActivity(mainIntent);
      }
 
      @Override
@@ -135,6 +219,7 @@
           super.onOptionsItemSelected(item);
           if(item.getItemId()==R.id.main_logout)
           {
+              updateUserStatus("offline");
               mauth.signOut();
               sendUserToLOginActivity();
           }
@@ -152,7 +237,7 @@
          }
          if(item.getItemId()==R.id.main_find_friends)
          {
-
+             sendUserToFFActivity();
          }
          return true;
 

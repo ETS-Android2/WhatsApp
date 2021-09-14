@@ -20,6 +20,10 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUserMetadata;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 public class LogInActivity extends AppCompatActivity {
 
@@ -28,6 +32,7 @@ public class LogInActivity extends AppCompatActivity {
     TextView forgotPassword,needNewAccount;
     RelativeLayout relativeLayout;
     FirebaseAuth mauth;
+    DatabaseReference UsersRef;
     ProgressDialog progressDialog;
 
     @Override
@@ -36,6 +41,7 @@ public class LogInActivity extends AppCompatActivity {
         setContentView(R.layout.activity_log_in);
         InitialiseFiels();
         mauth=FirebaseAuth.getInstance();
+        UsersRef = FirebaseDatabase.getInstance().getReference().child("Users");
         needNewAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -90,8 +96,32 @@ public class LogInActivity extends AppCompatActivity {
                public void onComplete(@NonNull Task<AuthResult> task) {
                    if(task.isSuccessful())
                    {
-                       SendUserMainActivity();
-                       Toast.makeText(getApplicationContext(), "Logged In Successfully !!", Toast.LENGTH_SHORT).show();
+                       String currentUserId = mauth.getCurrentUser().getUid();
+                       final String[] deviceToken = new String[1];
+                       FirebaseMessaging.getInstance().getToken()
+                               .addOnCompleteListener(new OnCompleteListener<String>() {
+                                   @Override
+                                   public void onComplete(@NonNull Task<String> task) {
+                                       deviceToken[0] = task.getResult();
+
+                                   }
+                               });
+
+                       UsersRef.child(currentUserId).child("device_token")
+                               .setValue(deviceToken[0])
+
+                               .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                   @Override
+                                   public void onComplete(@NonNull Task<Void> task)
+                                   {
+                                       if (task.isSuccessful())
+                                       {
+                                           SendUserMainActivity();
+                                           Toast.makeText(getApplicationContext(), "Logged In Successfully !!", Toast.LENGTH_SHORT).show();
+                                       }
+                                   }
+                               });
+
 
                    }
                    else
