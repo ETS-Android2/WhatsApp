@@ -49,7 +49,7 @@
             <ImageButton
                 android:id="@+id/file_input_img"
                 android:layout_width="30dp"
-                android:layout_marginStart="-90dp"
+                android:layout_marginStart="-85dp"
                 android:layout_height="60dp"
                 android:background="@android:color/background_light"
                 android:cropToPadding="true"
@@ -59,7 +59,6 @@
                 android:id="@+id/chat_input_img"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:foregroundGravity=""
                 android:layout_marginTop="5dp"
                 android:background="@drawable/shapebtn"
                 android:backgroundTint="@color/colorPrimary"
