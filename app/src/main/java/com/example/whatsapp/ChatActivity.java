@@ -126,6 +126,7 @@ public class ChatActivity extends AppCompatActivity {
         senMessage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                    sendMessage();
             }
         });
@@ -231,6 +232,7 @@ public class ChatActivity extends AppCompatActivity {
                                 messageBodyDetails.put(messageSenderRef+"/"+messagePushId,messageTextReady);
                                 messageBodyDetails.put(messageRecieverRef+"/"+messagePushId,messageTextReady);
                                 RootRef.updateChildren(messageBodyDetails);
+                                messageAdapter.notifyDataSetChanged();
                                 pd.dismiss();
 
                             }
@@ -360,22 +362,9 @@ public class ChatActivity extends AppCompatActivity {
             Map messageBodyDetails = new HashMap();
             messageBodyDetails.put(messageSenderRef+"/"+messagePushId,messageTextReady);
             messageBodyDetails.put(messageRecieverRef+"/"+messagePushId,messageTextReady);
-            RootRef.updateChildren(messageBodyDetails).addOnCompleteListener(new OnCompleteListener() {
-                @Override
-                public void onComplete(@NonNull Task task) {
-                   if(task.isSuccessful())
-                   {
+            RootRef.updateChildren(messageBodyDetails);
+            message.setText("");
 
-                       pd.dismiss();
-                      // Toast.makeText(getApplicationContext(), "Message Sent Successfully ...", Toast.LENGTH_SHORT).show();
-                   }
-                   else
-                   {
-                       Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
-                   }
-                   message.setText("");
-                }
-            });
 
 
 
