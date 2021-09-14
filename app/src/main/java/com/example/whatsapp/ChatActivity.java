@@ -60,6 +60,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -135,7 +136,6 @@ public class ChatActivity extends AppCompatActivity {
         recyclerView.setAdapter(messageAdapter);
         DisplayLastSeen();
         pd = new ProgressDialog(this);
-
         sendFiles.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -179,45 +179,14 @@ public class ChatActivity extends AppCompatActivity {
                 builder.show();
             }
         });
+        setRecyclerView();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
         updateUserStatus("online");
-        RootRef.child("Messages").child(messageSenderId).child(messageRecievedID)
-                .addChildEventListener(new ChildEventListener() {
-                    @Override
-                    public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                        Messages messages=snapshot.getValue(Messages.class);
-                        messagesList.add(messages);
-                       // Toast.makeText(getApplicationContext(), ""+messages.getMessage(), Toast.LENGTH_SHORT).show();
-                        messageAdapter.notifyDataSetChanged();
-                        recyclerView.smoothScrollToPosition(recyclerView.getAdapter()
-                        .getItemCount());
 
-                    }
-
-                    @Override
-                    public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-                    }
-
-                    @Override
-                    public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-
-                    }
-
-                    @Override
-                    public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });
     }
 
     @Override
@@ -262,8 +231,6 @@ public class ChatActivity extends AppCompatActivity {
                                 messageBodyDetails.put(messageSenderRef+"/"+messagePushId,messageTextReady);
                                 messageBodyDetails.put(messageRecieverRef+"/"+messagePushId,messageTextReady);
                                 RootRef.updateChildren(messageBodyDetails);
-                                finish();
-                                startActivity(getIntent());
                                 pd.dismiss();
 
                             }
@@ -322,8 +289,6 @@ public class ChatActivity extends AppCompatActivity {
                         messageBodyDetails.put(messageSenderRef+"/"+messagePushId,messageTextReady);
                         messageBodyDetails.put(messageRecieverRef+"/"+messagePushId,messageTextReady);
                         RootRef.updateChildren(messageBodyDetails);
-                        finish();
-                        startActivity(getIntent());
                         pd.dismiss();
 
 
@@ -349,7 +314,10 @@ public class ChatActivity extends AppCompatActivity {
         updateUserStatus("offline");
     }
 
-
+    @Override
+    protected void onStop() {
+        super.onStop();
+    }
 
     public void GetImage(String currentUser, CircleImageView imageView, Context context) {
         storageReference = FirebaseStorage.getInstance().getReference();
@@ -389,7 +357,6 @@ public class ChatActivity extends AppCompatActivity {
             messageTextReady.put("messageID",messagePushId);
             messageTextReady.put("time", saveCurrentTime);
             messageTextReady.put("date", saveCurrentDate);
-
             Map messageBodyDetails = new HashMap();
             messageBodyDetails.put(messageSenderRef+"/"+messagePushId,messageTextReady);
             messageBodyDetails.put(messageRecieverRef+"/"+messagePushId,messageTextReady);
@@ -459,4 +426,41 @@ public class ChatActivity extends AppCompatActivity {
         RootRef.child("Users").child(currentUserID).child("userState")
                 .child("state").setValue(state);
     }
+    public void setRecyclerView()
+    {
+        RootRef.child("Messages").child(messageSenderId).child(messageRecievedID)
+                .addChildEventListener(new ChildEventListener() {
+                    @Override
+                    public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                        Messages messages=snapshot.getValue(Messages.class);
+                        messagesList.add(messages);
+                        // Toast.makeText(getApplicationContext(), ""+messages.getMessage(), Toast.LENGTH_SHORT).show();
+                        messageAdapter.notifyDataSetChanged();
+                        recyclerView.smoothScrollToPosition(recyclerView.getAdapter()
+                                .getItemCount());
+
+                    }
+
+                    @Override
+                    public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                    }
+
+                    @Override
+                    public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+                    }
+
+                    @Override
+                    public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+    }
+
 }
