@@ -1,13 +1,23 @@
 package com.example.whatsapp.fragments;
 
+import static androidx.core.content.ContextCompat.getSystemService;
+
+import android.annotation.TargetApi;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
@@ -24,6 +34,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.whatsapp.MainActivity;
 import com.example.whatsapp.R;
 import com.example.whatsapp.helper.Contacts;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -44,6 +55,7 @@ import com.google.firebase.storage.StorageReference;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -55,6 +67,8 @@ public class RequestFragment extends Fragment {
     String currentUserID;
     FirebaseAuth mAuth;
     StorageReference storageReference;
+    String names="";
+    NotificationManager notificationManager;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -107,10 +121,11 @@ public class RequestFragment extends Fragment {
                                                     String requestProfileImage=snapshot.child("image").getValue().toString();
                                                       GetImage(holder.profileImage, requestProfileImage,getContext());
                                                 }
-
                                                 String requestUsersName=snapshot.child("name").getValue().toString();
                                                 holder.userName.setText(requestUsersName);
                                                 holder.userStatus.setText("wants to connect with you");
+                                                names+=requestUsersName+" ";
+                                                show_Notification(requestUsersName);
                                                 holder.AcceptBtn.setOnClickListener(new View.OnClickListener() {
                                                     @Override
                                                     public void onClick(View view) {
@@ -120,6 +135,7 @@ public class RequestFragment extends Fragment {
                                                                         "Cancel"
 
                                                                 };
+                                                        deleteNotification();
                                                         AlertDialog.Builder builder=new AlertDialog.Builder(getContext());
                                                         builder.setTitle(requestUsersName+"'s Chat Request");
                                                         builder.setItems(options, (DialogInterface.OnClickListener) (dialogInterface, i) -> {
@@ -189,6 +205,7 @@ public class RequestFragment extends Fragment {
                                                     }
                                                 });
                                                 holder.CancelBtn.setOnClickListener(new View.OnClickListener() {
+
                                                     @Override
                                                     public void onClick(View view) {
                                                         CharSequence options[]=new CharSequence[]
@@ -197,6 +214,7 @@ public class RequestFragment extends Fragment {
                                                                         "Cancel"
 
                                                                 };
+                                                        deleteNotification();
                                                         AlertDialog.Builder builder=new AlertDialog.Builder(getContext());
                                                         builder.setTitle(requestUsersName+"'s Chat Request");
                                                         builder.setItems(options, (DialogInterface.OnClickListener) (dialogInterface, i) -> {
@@ -436,5 +454,32 @@ public class RequestFragment extends Fragment {
 
             }
         });
+    }
+    @TargetApi(Build.VERSION_CODES.O)
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+
+    public void show_Notification( String heading){
+
+        Intent intent=new Intent(getContext(), MainActivity.class);
+        String CHANNEL_ID="MYCHANNEL";
+        NotificationChannel notificationChannel=new NotificationChannel(CHANNEL_ID,"name", NotificationManager.IMPORTANCE_LOW);
+        PendingIntent pendingIntent=PendingIntent.getActivity(getContext(),1,intent,0);
+        Notification notification=new Notification.Builder(getContext(),CHANNEL_ID)
+                .setContentText("has sent you friend request")
+                .setContentTitle(heading)
+                .setContentIntent(pendingIntent)
+                .addAction(R.drawable.wp,"Title",pendingIntent)
+                .setChannelId(CHANNEL_ID)
+                .setSmallIcon(R.drawable.wp)
+                .build();
+        notificationManager=(NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.createNotificationChannel(notificationChannel);
+        notificationManager.notify(1,notification);
+
+
+    }
+    public void deleteNotification()
+    {
+        notificationManager.cancelAll();
     }
 }

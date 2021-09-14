@@ -22,6 +22,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
+
             <TextView
                 android:id="@+id/group_chat_text_display"
                 android:layout_width="match_parent"
@@ -39,9 +40,9 @@
         </LinearLayout>
     </ScrollView>
     <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_margin="15dp"
-
+        android:layout_alignParentEnd="true"
         android:id="@+id/myLinearLayout"
         app:cardCornerRadius="100dp"
         android:layout_alignParentStart="true"
@@ -55,8 +56,8 @@
          android:layout_alignParentBottom="true"
           android:orientation="horizontal">
          <EditText
-             android:layout_width="305dp"
-             android:layout_marginStart="12dp"
+             android:layout_width="295dp"
+             android:layout_marginStart="18dp"
              android:layout_height="wrap_content"
              android:id="@+id/input_group_msgs"
              android:hint="Please write a message..."

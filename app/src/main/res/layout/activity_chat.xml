@@ -19,26 +19,27 @@
         android:layout_below="@+id/chat_activity_toolbar"></androidx.recyclerview.widget.RecyclerView>
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_margin="10dp"
+        android:layout_margin="15dp"
         android:id="@+id/cardView"
         app:cardCornerRadius="100dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
         android:elevation="20dp"
         android:layout_height="wrap_content">
 
         <LinearLayout
 
             android:id="@+id/chatlinearLayout"
-            android:layout_width="407dp"
+            android:layout_width="wrap_content"
             android:layout_height="60dp"
             android:orientation="horizontal">
 
             <EditText
                 android:id="@+id/chat_input_msg"
-                android:layout_width="290dp"
+                android:layout_width="280dp"
                 android:layout_height="60dp"
-                android:layout_marginStart="12dp"
+                android:layout_marginStart="10dp"
                 android:hint="Please write a message..."
                 android:padding="7dp">
 
@@ -51,11 +52,7 @@
                 android:background="@android:color/background_light"
                 android:cropToPadding="true"
                 android:src="@drawable/ic_baseline_attach_file_24"></ImageButton>
-  <Space
-      android:layout_width="5dp"
-      android:layout_height="wrap_content">
 
-  </Space>
             <ImageButton
                 android:id="@+id/chat_input_img"
                 android:layout_width="50dp"

@@ -227,12 +227,10 @@ public class ChatActivity extends AppCompatActivity {
                                 messageTextReady.put("messageID",messagePushId);
                                 messageTextReady.put("time", saveCurrentTime);
                                 messageTextReady.put("date", saveCurrentDate);
-
                                 Map messageBodyDetails = new HashMap();
                                 messageBodyDetails.put(messageSenderRef+"/"+messagePushId,messageTextReady);
                                 messageBodyDetails.put(messageRecieverRef+"/"+messagePushId,messageTextReady);
                                 RootRef.updateChildren(messageBodyDetails);
-                                messageAdapter.notifyDataSetChanged();
                                 pd.dismiss();
 
                             }
@@ -286,7 +284,6 @@ public class ChatActivity extends AppCompatActivity {
                         messageTextReady.put("messageID",messagePushId);
                         messageTextReady.put("time", saveCurrentTime);
                         messageTextReady.put("date", saveCurrentDate);
-
                         Map messageBodyDetails = new HashMap();
                         messageBodyDetails.put(messageSenderRef+"/"+messagePushId,messageTextReady);
                         messageBodyDetails.put(messageRecieverRef+"/"+messagePushId,messageTextReady);

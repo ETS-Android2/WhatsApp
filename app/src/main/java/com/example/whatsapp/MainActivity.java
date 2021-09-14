@@ -1,8 +1,15 @@
  package com.example.whatsapp;
 
+ import android.annotation.TargetApi;
+ import android.app.Notification;
+ import android.app.NotificationChannel;
+ import android.app.NotificationManager;
+ import android.app.PendingIntent;
  import android.app.ProgressDialog;
+ import android.content.Context;
  import android.content.DialogInterface;
  import android.content.Intent;
+ import android.os.Build;
  import android.os.Bundle;
  import android.text.TextUtils;
  import android.view.Menu;
@@ -10,14 +17,13 @@
  import android.view.View;
  import android.widget.EditText;
  import android.widget.Toast;
-
  import androidx.annotation.NonNull;
+ import androidx.annotation.RequiresApi;
  import androidx.appcompat.app.AlertDialog;
  import androidx.appcompat.app.AppCompatActivity;
  import androidx.appcompat.widget.Toolbar;
+ import androidx.core.app.NotificationCompat;
  import androidx.viewpager.widget.ViewPager;
-
-
  import com.example.whatsapp.Settings.SettingsActivity;
  import com.example.whatsapp.helper.TabAceesorAdapter;
  import com.example.whatsapp.loginsignup.LogInActivity;
@@ -288,5 +294,6 @@
                     }
                 });
      }
+
  }
 
