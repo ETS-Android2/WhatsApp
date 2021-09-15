@@ -338,7 +338,7 @@ public class ChatActivity extends AppCompatActivity {
         String messageText=message.getText().toString();
         if (TextUtils.isEmpty(messageText))
         {
-            Toast.makeText(this, "please write your message ...", Toast.LENGTH_SHORT).show();
+            message.setError("Please enter a message");
 
         }
         else

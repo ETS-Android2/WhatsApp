@@ -67,7 +67,6 @@ public class RequestFragment extends Fragment {
     String currentUserID;
     FirebaseAuth mAuth;
     StorageReference storageReference;
-    String names="";
     NotificationManager notificationManager;
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -124,8 +123,6 @@ public class RequestFragment extends Fragment {
                                                 String requestUsersName=snapshot.child("name").getValue().toString();
                                                 holder.userName.setText(requestUsersName);
                                                 holder.userStatus.setText("wants to connect with you");
-                                                names+=requestUsersName+" ";
-                                                show_Notification(requestUsersName);
                                                 holder.AcceptBtn.setOnClickListener(new View.OnClickListener() {
                                                     @Override
                                                     public void onClick(View view) {
@@ -135,7 +132,6 @@ public class RequestFragment extends Fragment {
                                                                         "Cancel"
 
                                                                 };
-                                                        deleteNotification();
                                                         AlertDialog.Builder builder=new AlertDialog.Builder(getContext());
                                                         builder.setTitle(requestUsersName+"'s Chat Request");
                                                         builder.setItems(options, (DialogInterface.OnClickListener) (dialogInterface, i) -> {
@@ -178,6 +174,7 @@ public class RequestFragment extends Fragment {
                                                             }
                                                             if(i==1)
                                                             {
+
                                                                 chatRequestRef.child(currentUserID)
                                                                         .child(list_user_id)
                                                                         .removeValue()
@@ -214,12 +211,13 @@ public class RequestFragment extends Fragment {
                                                                         "Cancel"
 
                                                                 };
-                                                        deleteNotification();
+
                                                         AlertDialog.Builder builder=new AlertDialog.Builder(getContext());
                                                         builder.setTitle(requestUsersName+"'s Chat Request");
                                                         builder.setItems(options, (DialogInterface.OnClickListener) (dialogInterface, i) -> {
                                                             if(i==0)
                                                             {
+
                                                                 ContactsRef.child(currentUserID)
                                                                         .child(list_user_id)
                                                                         .child("Contact")
@@ -257,6 +255,7 @@ public class RequestFragment extends Fragment {
                                                             }
                                                             if(i==1)
                                                             {
+
                                                                 chatRequestRef.child(currentUserID)
                                                                         .child(list_user_id)
                                                                         .removeValue()
@@ -468,7 +467,6 @@ public class RequestFragment extends Fragment {
                 .setContentText("has sent you friend request")
                 .setContentTitle(heading)
                 .setContentIntent(pendingIntent)
-                .addAction(R.drawable.wp,"Title",pendingIntent)
                 .setChannelId(CHANNEL_ID)
                 .setSmallIcon(R.drawable.wp)
                 .build();

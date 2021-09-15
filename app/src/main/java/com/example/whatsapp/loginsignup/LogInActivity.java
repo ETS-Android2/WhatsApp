@@ -1,6 +1,8 @@
 package com.example.whatsapp.loginsignup;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -16,8 +18,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.whatsapp.MainActivity;
 import com.example.whatsapp.R;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.FirebaseNetworkException;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUserMetadata;
@@ -60,6 +65,54 @@ public class LogInActivity extends AppCompatActivity {
                 SendPhoneLogInActivity();
             }
         });
+        forgotPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sendLinkonMail();
+            }
+        });
+    }
+    public void sendLinkonMail()
+    {
+        if(email.getText().toString().length()>8 && email.getText().toString().matches("^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$"))
+        {
+            AlertDialog.Builder passwordreset= new AlertDialog.Builder(this);
+            passwordreset.setTitle("Reset Password?");
+            passwordreset.setMessage("Press YES to receive the reset link");
+            passwordreset.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    String resetemail = email.getText().toString();
+                    mauth.sendPasswordResetEmail(resetemail).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Toast.makeText(getApplicationContext(),"Email reset link sent please check your mail",Toast.LENGTH_SHORT).show();
+
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            if(e instanceof FirebaseNetworkException)
+                            { Toast.makeText(getApplicationContext(),"No internet connection",Toast.LENGTH_SHORT).show();}
+                            Toast.makeText(getApplicationContext(),"Email reset link not sent as no user exist by this email",Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
+
+                }
+            });
+            passwordreset.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+
+                }
+            });
+            passwordreset.create().show();
+
+        }
+        else
+        {email.setError("Enter a valid email");}
+
     }
 
     private void SendPhoneLogInActivity() {
@@ -73,16 +126,18 @@ public class LogInActivity extends AppCompatActivity {
         String userPassword=password.getText().toString();
         if(TextUtils.isEmpty(userEmail))
         {
-            Snackbar.make(relativeLayout, "PLease Enter Your Email ...", Snackbar.LENGTH_SHORT).show();
+            email.setError("Please Enter Email Id");
 
         }
         if(TextUtils.isEmpty(userPassword))
         {
-            Snackbar.make(relativeLayout,"Please Enter Password ...",Snackbar.LENGTH_SHORT).show();
+            password.setError("Please set Password");
         }
         if(TextUtils.isEmpty(userEmail) && TextUtils.isEmpty(userPassword))
         {
-            Snackbar.make(relativeLayout,"Please Enter Email and Password ...",Snackbar.LENGTH_SHORT).show();
+            email.setError("Please Enter Email Id");
+            password.setError("Please set Password");
+
 
         }
         if(!TextUtils.isEmpty(userEmail) &&!TextUtils.isEmpty(userPassword)) {

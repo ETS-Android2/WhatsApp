@@ -56,7 +56,7 @@ public class PhoneLogInActivity extends AppCompatActivity {
                 String phoneNumber = InputPhoneNumber.getText().toString();
                 if(TextUtils.isEmpty(phoneNumber))
                 {
-                    Toast.makeText(getApplicationContext(), "Phone number is required...", Toast.LENGTH_SHORT).show();
+                   InputPhoneNumber.setError("Please enter a valid PhoneNumber");
                 }
                 else
                 {
@@ -126,7 +126,7 @@ public class PhoneLogInActivity extends AppCompatActivity {
                 String verificationCode=InputVerification.getText().toString();
                 if(TextUtils.isEmpty(verificationCode))
                 {
-                    Toast.makeText(getApplicationContext(), "Please write a verification code ...", Toast.LENGTH_SHORT).show();
+                    InputVerification.setError("Please enter verification code");
                 }
                 else
                 {

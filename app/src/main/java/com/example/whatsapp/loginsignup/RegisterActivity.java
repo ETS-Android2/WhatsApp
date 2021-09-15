@@ -64,25 +64,25 @@ public class RegisterActivity extends AppCompatActivity {
         String userPassword=regPassword.getText().toString();
         if(TextUtils.isEmpty(userEmail))
         {
-             Snackbar.make(relativeLayout, "PLease Enter Your Email ...", Snackbar.LENGTH_SHORT).show();
+            regEmail.setError( "Please Enter Your Email ...");
 
         }
         if(TextUtils.isEmpty(userPassword))
         {
-            Snackbar.make(relativeLayout,"Please Enter Password ...",Snackbar.LENGTH_SHORT).show();
+            regPassword.setError( "Please Enter Your Password ...");
         }
         if(TextUtils.isEmpty(userEmail) && TextUtils.isEmpty(userPassword))
         {
-             Snackbar.make(relativeLayout,"Please Enter Email and Password ...",Snackbar.LENGTH_SHORT).show();
+            regEmail.setError( "Please Enter Your Email ...");
+            regPassword.setError( "Please Enter Your Password ...");
 
         }
         if(!TextUtils.isEmpty(userEmail) &&!TextUtils.isEmpty(userPassword))
         {
             progressDialog.setTitle("Creating New Account")        ;
-            progressDialog.setMessage("PLease Wait , While we are creating new account for you ...");
+            progressDialog.setMessage("Please Wait , While we are creating new account for you ...");
             progressDialog.setCanceledOnTouchOutside(true);
             progressDialog.show();
-            final String[] deviceToken = new String[1];
             auth.createUserWithEmailAndPassword(userEmail,userPassword).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
 
@@ -105,7 +105,7 @@ public class RegisterActivity extends AppCompatActivity {
                                      .setValue(deviceToken[0]);
 
                              SendUserMainActivity();
-                             Toast.makeText(getApplicationContext() , "Account Created Successfully !" + currentUserID, Toast.LENGTH_SHORT).show();                   }
+                             Toast.makeText(getApplicationContext() , "Account Created Successfully !", Toast.LENGTH_SHORT).show();                   }
                          else
                          {
                                 String errorMessage= Objects.requireNonNull(task.getException()).getLocalizedMessage();

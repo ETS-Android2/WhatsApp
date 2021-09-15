@@ -46,7 +46,6 @@ public class GroupChatActivity extends AppCompatActivity {
         currentGroupName=getIntent().getExtras().get("groupName").toString();
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(currentGroupName);
-        Toast.makeText(getApplicationContext(), currentGroupName, Toast.LENGTH_SHORT).show();
         UserRef = FirebaseDatabase.getInstance().getReference().child("Users");
         GroupNameRef = FirebaseDatabase.getInstance().getReference().child("Groups").child(currentGroupName);
         GetUserInfo();
@@ -114,9 +113,8 @@ public class GroupChatActivity extends AppCompatActivity {
     private void SaveMessageInfoToDatabase() {
         String message=userMessageInput.getText().toString();
         String messageKey=GroupNameRef.push().getKey();
-        if(TextUtils.isEmpty(message))
-        {
-            Toast.makeText(getApplicationContext(), "Please write message first ....", Toast.LENGTH_SHORT).show();
+        if(TextUtils.isEmpty(message)) {
+            userMessageInput.setError("Please write message first ....");
         }
         else
         {
