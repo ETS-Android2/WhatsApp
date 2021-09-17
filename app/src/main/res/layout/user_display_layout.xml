@@ -33,32 +33,44 @@
 
                 <TextView
                     android:id="@+id/users_profile_name"
-                    android:layout_width="200dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="user name"
+                    android:singleLine="true"
                     android:textAlignment="textStart"
                     android:textSize="18sp"
                     android:textStyle="bold"></TextView>
 
                 <ImageView
                     android:id="@+id/user_online"
-                    android:layout_width="18dp"
-                    android:layout_height="18dp"
-                    android:layout_marginTop="5dp"
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="8dp"
                     android:src="@drawable/online"
                     android:visibility="invisible"
                     >
 
                 </ImageView>
             </LinearLayout>
-
             <TextView
+                android:id="@+id/contact_status"
+                android:layout_width="250dp"
+                android:visibility="gone"
+                android:singleLine="true"
+                android:layout_height="wrap_content"
+                android:text="contact status"
+                android:textAlignment="textStart"
+                android:textSize="14sp"></TextView>
+            <TextView
+
                 android:id="@+id/users_status"
                 android:layout_width="250dp"
+                android:singleLine="true"
                 android:layout_height="wrap_content"
                 android:text="user name"
                 android:textAlignment="textStart"
-                android:textSize="16sp"></TextView>
+                android:textSize="12sp"></TextView>
 
             <LinearLayout
                 android:layout_marginTop="8dp"
