@@ -42,7 +42,7 @@
     </ScrollView>
     <androidx.cardview.widget.CardView
         android:layout_width="wrap_content"
-        android:layout_margin="15dp"
+        android:layout_margin="5dp"
         android:layout_alignParentEnd="true"
         android:id="@+id/myLinearLayout"
         app:cardCornerRadius="100dp"
