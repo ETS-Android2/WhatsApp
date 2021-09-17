@@ -42,6 +42,14 @@
         android:textSize="15dp"
         android:layout_height="wrap_content">
     </TextView>
+    <ProgressBar
+        android:id="@+id/user_status_prog"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:max="100"
+        android:progress="0"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"/>
     <ImageView
         android:layout_marginTop="20dp"
         android:gravity="center"
