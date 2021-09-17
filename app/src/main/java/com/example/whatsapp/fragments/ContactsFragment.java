@@ -131,7 +131,7 @@ public class ContactsFragment extends Fragment {
                                 c.add(Calendar.HOUR,1);
                                 Date validate=c.getTime();
                                 Date date = Calendar.getInstance().getTime();
-                                DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+                                DateFormat dateFormat = new SimpleDateFormat("hh:mm:ss yyyy-mm-dd");
                                 String today = dateFormat.format(date);
                                 String vali = dateFormat.format(validate);
                                 UserRef.child(currentUser).child("timeuploaded").setValue(today);
@@ -172,12 +172,12 @@ public class ContactsFragment extends Fragment {
                 holder.h.setVisibility(View.GONE);
                 if(model.getTimeuploaded()!=null && model.getValid()!=null) {
                     Date date = Calendar.getInstance().getTime();
-                    DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+                    DateFormat dateFormat = new SimpleDateFormat("hh:mm:ss yyyy-mm-dd");
                     String today = dateFormat.format(date);
                     Date val = null, now = null;
                     try {
-                        val = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss").parse(model.getValid());
-                        now = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss").parse(today);
+                        val = new SimpleDateFormat("hh:mm:ss yyyy-mm-dd").parse(model.getValid());
+                        now = new SimpleDateFormat("hh:mm:ss yyyy-mm-dd").parse(today);
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
