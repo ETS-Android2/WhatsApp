@@ -18,13 +18,12 @@ String imageUrl;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image_view);
-
         imageView=findViewById(R.id.image_viewer);
         imageUrl=getIntent().getStringExtra("url");
         GetImage(imageUrl);
 
     }
-    public void GetImage(String currentUser ) {
+    public void GetImage(String currentUser) {
         StorageReference storageReference = FirebaseStorage.getInstance().getReference();
         storageReference.child("Image Files/" + currentUser + ".jpg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override

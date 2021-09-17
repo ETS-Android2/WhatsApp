@@ -38,6 +38,7 @@
         <entry key="app/src/main/res/layout/activity_profile.xml" value="0.3229166666666667" />
         <entry key="app/src/main/res/layout/activity_register.xml" value="0.3229166666666667" />
         <entry key="app/src/main/res/layout/activity_settings.xml" value="0.3229166666666667" />
+        <entry key="app/src/main/res/layout/activity_status.xml" value="0.2421875" />
         <entry key="app/src/main/res/layout/app_bar_layout.xml" value="0.3229166666666667" />
         <entry key="app/src/main/res/layout/custom_chat_bar.xml" value="0.4" />
         <entry key="app/src/main/res/layout/custom_messages_layout.xml" value="0.2" />
@@ -47,6 +48,7 @@
         <entry key="app/src/main/res/layout/fragment_request.xml" value="0.2719298245614035" />
         <entry key="app/src/main/res/layout/fragment_status.xml" value="0.2421875" />
         <entry key="app/src/main/res/layout/sender_message_layout.xml" value="0.2719298245614035" />
+        <entry key="app/src/main/res/layout/statuslaayout.xml" value="0.2421875" />
         <entry key="app/src/main/res/layout/user_display_layout.xml" value="0.3229166666666667" />
         <entry key="app/src/main/res/menu/options_menu.xml" value="0.1" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/attachvec.xml" value="0.2842968075927524" />

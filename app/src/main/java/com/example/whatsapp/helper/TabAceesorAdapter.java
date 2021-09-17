@@ -57,7 +57,7 @@ public class TabAceesorAdapter extends FragmentPagerAdapter {
             case 1 :
                 return "Groups";
             case 2 :
-                return "Contacts";
+                return "Status";
             case 3 :
                 return "Requests";
             default:

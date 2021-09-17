@@ -22,6 +22,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
         <activity
+            android:name=".StatusActivity"
+            android:exported="true" />
+        <activity
             android:name=".IMageViewActivity"
             android:exported="true" />
         <activity

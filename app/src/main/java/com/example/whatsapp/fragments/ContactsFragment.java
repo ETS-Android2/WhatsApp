@@ -1,29 +1,44 @@
 package com.example.whatsapp.fragments;
 
+import static android.app.Activity.RESULT_OK;
+import static com.example.whatsapp.Settings.SettingsActivity.Galley_Code;
+
+import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.text.format.Time;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Adapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.whatsapp.FindFriendsActivity;
+import com.example.whatsapp.MainActivity;
+import com.example.whatsapp.ProfileActivity;
 import com.example.whatsapp.R;
+import com.example.whatsapp.Settings.SettingsActivity;
+import com.example.whatsapp.StatusActivity;
 import com.example.whatsapp.helper.Contacts;
+import com.firebase.ui.auth.data.model.User;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -37,23 +52,36 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
+import java.util.UUID;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 
 public class ContactsFragment extends Fragment {
     View ContactView;
-    RecyclerView myContactList;
+    RecyclerView myContactsList;
     FloatingActionButton statusbutton;
-    DatabaseReference ContactRef,UserRef;
-    StorageReference storageReference;
+    StorageReference  storageReference;
     FirebaseAuth mAuth;
     String currentUser;
-
+    DatabaseReference databaseReference;
+    private Uri filePath;
+    private final int PICK_IMAGE_REQUEST = 22;
+    DatabaseReference UserRef;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,109 +91,162 @@ public class ContactsFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         ContactView= inflater.inflate(R.layout.fragment_contacts, container, false);
-        myContactList=ContactView.findViewById(R.id.myContactList);
-        myContactList.setLayoutManager(new LinearLayoutManager(getContext()));
+        myContactsList=ContactView.findViewById(R.id.myContactList);
+        myContactsList.setLayoutManager(new LinearLayoutManager(getContext()));
         mAuth=FirebaseAuth.getInstance();
         currentUser=mAuth.getCurrentUser().getUid();
+        storageReference=FirebaseStorage.getInstance().getReference().child("Status");
+        databaseReference=FirebaseDatabase.getInstance().getReference().child("Status");
         statusbutton=ContactView.findViewById(R.id.btn_create_channel2);
+        myContactsList.setLayoutManager(new LinearLayoutManager(getContext()));
+        UserRef= FirebaseDatabase.getInstance().getReference().child("Users");
         statusbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getContext(),"To be build",Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent();
+                intent.setType("image/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
             }
-        });
-        ContactRef= FirebaseDatabase.getInstance().getReference().child("Contacts").child(currentUser);
-        UserRef=FirebaseDatabase.getInstance().getReference().child("Users");
-        return ContactView;
+    });
+    return ContactView;
     }
-
     @Override
-    public void onStart() {
-        super.onStart();
-        FirebaseRecyclerOptions options=new FirebaseRecyclerOptions.Builder<Contacts>()
-                .setQuery(ContactRef,Contacts.class)
-                .build();
-        FirebaseRecyclerAdapter<Contacts,ContactsViewHolder> adapter
-                =new FirebaseRecyclerAdapter<Contacts, ContactsViewHolder>(options) {
-            @Override
-            protected void onBindViewHolder(@NonNull ContactsViewHolder holder, int position, @NonNull Contacts model) {
-
-               final  String userIDs=getRef(position).getKey();
-                UserRef.child(userIDs).addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        if (snapshot.exists()) {
-                            if (snapshot.child("userState").hasChild("state")) {
-                                String state = snapshot.child("userState").child("state").getValue().toString();
-                                String date = snapshot.child("userState").child("date").getValue().toString();
-                                String time = snapshot.child("userState").child("time").getValue().toString();
-
-                                if (state.equals("online")) {
-                                    holder.onlineIcon.setVisibility(View.VISIBLE);
-                                } else if (state.equals("offline")) {
-                                    holder.onlineIcon.setVisibility(View.INVISIBLE);
-                                }
-                            } else {
-                                holder.onlineIcon.setVisibility(View.INVISIBLE);
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
+            filePath = data.getData();
+            Toast.makeText(getContext(), ""+filePath, Toast.LENGTH_SHORT).show();
+            if(filePath != null){
+                final ProgressDialog progressDialog = new ProgressDialog(getContext());
+                progressDialog.setTitle("Uploading");
+                progressDialog.show();
+                StorageReference picsRef = storageReference.child(currentUser+".jpg");
+                picsRef.putFile(filePath)
+                        .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                            @Override
+                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                progressDialog.dismiss();
+                                Calendar c=Calendar.getInstance();
+                                c.add(Calendar.HOUR,1);
+                                Date validate=c.getTime();
+                                Date date = Calendar.getInstance().getTime();
+                                DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+                                String today = dateFormat.format(date);
+                                String vali = dateFormat.format(validate);
+                                UserRef.child(currentUser).child("timeuploaded").setValue(today);
+                                UserRef.child(currentUser).child("valid").setValue(vali);
+                                Toast.makeText(getContext(),"Story posted",Toast.LENGTH_SHORT);
                             }
-
-
-                            if (snapshot.hasChild("image")) {
-                                String imageUser = snapshot.child("image").getValue().toString();
-                                String userStatus = snapshot.child("status").getValue().toString();
-                                String userName = snapshot.child("name").getValue().toString();
-                                holder.userName.setText(userName);
-                                holder.UserStatus.setText(userStatus);
-                                GetImage(imageUser, holder.profileImage, getContext());
-
-                            } else {
-                                String userStatus = snapshot.child("status").getValue().toString();
-                                String userName = snapshot.child("name").getValue().toString();
-                                holder.userName.setText(userName);
-                                holder.UserStatus.setText(userStatus);
-                                holder.profileImage.setImageResource(R.drawable.profile_image);
-
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                progressDialog.dismiss();
+                                Toast.makeText(getContext(),"Story couldn't be posted",Toast.LENGTH_SHORT);
                             }
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });
+                        })
+                        .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                            @Override
+                            public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                                double progress = (100.0 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
+                                progressDialog.setMessage("Uploaded " + ((int) progress) + "%...");
+                            }
+                        });
             }
-
-            @NonNull
-            @Override
-            public ContactsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-             View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.user_display_layout,parent,false);
-             ContactsViewHolder viewHolder=new ContactsViewHolder(view);
-             return viewHolder;
-            }
-        };
-        myContactList.setAdapter(adapter);
-        adapter.startListening();
-    }
-    public static class ContactsViewHolder extends RecyclerView.ViewHolder {
-        TextView userName , UserStatus;
-        CircleImageView profileImage;
-        ImageView onlineIcon;
-        public ContactsViewHolder(@NonNull View itemView) {
-            super(itemView);
-            userName=itemView.findViewById(R.id.users_profile_name);
-            UserStatus=itemView.findViewById(R.id.users_status);
-            profileImage=itemView.findViewById(R.id.users_profile_image);
-            onlineIcon=itemView.findViewById(R.id.user_online);
 
         }
     }
-    public void GetImage(String currentUser, CircleImageView imageView, Context context) {
-        storageReference = FirebaseStorage.getInstance().getReference();
-        storageReference.child("Profile Images/" + currentUser + ".jpg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+    @Override
+    public void onStart() {
+        super.onStart();
+        FirebaseRecyclerOptions<Contacts> options=new
+                FirebaseRecyclerOptions.Builder<Contacts>()
+                .setQuery(UserRef,Contacts.class)
+                .build();
+        FirebaseRecyclerAdapter<Contacts, ContactsFragment.FindFriendViewHolder> adapter=new FirebaseRecyclerAdapter<Contacts, ContactsFragment.FindFriendViewHolder>(options) {
+            @SuppressLint("RecyclerView")
+            @Override
+            protected void onBindViewHolder(@NonNull ContactsFragment.FindFriendViewHolder holder, final int position, @NonNull Contacts model) {
+                holder.uh.setVisibility(View.GONE);
+                holder.h.setVisibility(View.GONE);
+                if(model.getTimeuploaded()!=null && model.getValid()!=null) {
+                    Date date = Calendar.getInstance().getTime();
+                    DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+                    String today = dateFormat.format(date);
+                    Date val = null, now = null;
+                    try {
+                        val = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss").parse(model.getValid());
+                        now = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss").parse(today);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+
+                    if (now.before(val)) {
+                        holder.uh.setVisibility(View.VISIBLE);
+                        holder.h.setVisibility(View.GONE);
+                        holder.userName.setText(model.getName());
+                        holder.userStatus.setText(model.getStatus());
+                        GetImage(holder.profileImage, model.getuid());
+                        holder.profileImage.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                Intent intent = new Intent(getContext(), StatusActivity.class);
+                                intent.putExtra("userid", model.getuid());
+                                intent.putExtra("time", model.getTimeuploaded());
+                                intent.putExtra("username", model.getName());
+                                startActivity(intent);
+                            }
+                        });
+                    }
+                    else
+                    {
+                        holder.uh.setVisibility(View.GONE);
+                        holder.h.setVisibility(View.VISIBLE);
+                    }
+                }
+                else
+                {
+                    holder.uh.setVisibility(View.GONE);
+                    holder.h.setVisibility(View.VISIBLE);
+                }
+            }
+
+
+            @NonNull
+            @Override
+            public ContactsFragment.FindFriendViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+                View view= LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.statuslaayout,viewGroup,false);
+                ContactsFragment.FindFriendViewHolder viewHolder=new ContactsFragment.FindFriendViewHolder(view);
+                return viewHolder;
+            }
+        };
+        myContactsList.setAdapter(adapter);
+        adapter.startListening();
+    }
+    public static class FindFriendViewHolder extends RecyclerView.ViewHolder
+    {
+        LinearLayout uh,h;
+        TextView userName , userStatus;
+        CircleImageView profileImage;
+        public FindFriendViewHolder(@NonNull View itemView) {
+            super(itemView);
+            userName=itemView.findViewById(R.id.status_contact_name);
+            userStatus=itemView.findViewById(R.id.status_upload_time);
+            profileImage=itemView.findViewById(R.id.image_preview_status);
+            uh=itemView.findViewById(R.id.unhide);
+            h=itemView.findViewById(R.id.hide);
+            uh.setVisibility(View.GONE);
+            h.setVisibility(View.GONE);
+
+        }
+    }
+    public void GetImage(CircleImageView userProfileImg ,String userid) {
+        StorageReference storageReference = FirebaseStorage.getInstance().getReference();
+        storageReference.child("Status/" + userid + ".jpg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
-                Glide.with(context).load(uri).into(imageView);
+                Glide.with(getContext()).load(uri).into(userProfileImg);
 
             }
         }).addOnFailureListener(new OnFailureListener() {
@@ -175,4 +256,5 @@ public class ContactsFragment extends Fragment {
             }
         });
     }
+
 }

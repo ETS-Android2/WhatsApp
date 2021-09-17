@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="#000"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    tools:context=".StatusActivity">
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_gravity="start"
+        android:layout_margin="20dp"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content">
+      <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_width="60dp"
+        android:cropToPadding="true"
+        android:src="@drawable/profile_image"
+          android:id="@+id/custom_image"
+        android:layout_height="60dp">
+    </de.hdodenhof.circleimageview.CircleImageView>
+        <TextView
+            android:layout_width="match_parent"
+            android:text="user status"
+            android:gravity="center"
+            android:id="@+id/user"
+            android:layout_margin="20dp"
+            android:textColor="@android:color/background_light"
+            android:textStyle="bold"
+            android:textSize="20dp"
+            android:layout_height="wrap_content">
+        </TextView>
+    </LinearLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:text="user status"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:id="@+id/user_status_act"
+        android:textColor="@android:color/background_light"
+        android:textSize="15dp"
+        android:layout_height="wrap_content">
+    </TextView>
+    <ImageView
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:id="@+id/status_image"
+        android:layout_gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="500dp">
+    </ImageView>
+
+
+</LinearLayout>
