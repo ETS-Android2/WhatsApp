@@ -128,7 +128,7 @@ public class ContactsFragment extends Fragment {
                             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                                 progressDialog.dismiss();
                                 Calendar c=Calendar.getInstance();
-                                c.add(Calendar.HOUR,1);
+                                c.add(Calendar.HOUR,6);
                                 Date validate=c.getTime();
                                 Date date = Calendar.getInstance().getTime();
                                 DateFormat dateFormat = new SimpleDateFormat("hh:mm:ss dd-MM-yyyy");
