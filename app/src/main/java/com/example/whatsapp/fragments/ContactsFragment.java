@@ -1,6 +1,7 @@
 package com.example.whatsapp.fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -12,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Adapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -19,12 +21,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.whatsapp.FindFriendsActivity;
 import com.example.whatsapp.R;
 import com.example.whatsapp.helper.Contacts;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -44,6 +48,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class ContactsFragment extends Fragment {
     View ContactView;
     RecyclerView myContactList;
+    FloatingActionButton statusbutton;
     DatabaseReference ContactRef,UserRef;
     StorageReference storageReference;
     FirebaseAuth mAuth;
@@ -66,6 +71,13 @@ public class ContactsFragment extends Fragment {
         myContactList.setLayoutManager(new LinearLayoutManager(getContext()));
         mAuth=FirebaseAuth.getInstance();
         currentUser=mAuth.getCurrentUser().getUid();
+        statusbutton=ContactView.findViewById(R.id.btn_create_channel2);
+        statusbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getContext(),"To be build",Toast.LENGTH_SHORT).show();
+            }
+        });
         ContactRef= FirebaseDatabase.getInstance().getReference().child("Contacts").child(currentUser);
         UserRef=FirebaseDatabase.getInstance().getReference().child("Users");
         return ContactView;

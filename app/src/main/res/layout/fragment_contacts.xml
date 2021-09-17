@@ -10,5 +10,16 @@
        android:layout_width="match_parent"
        android:layout_height="match_parent"
        android:id="@+id/myContactList"/>
-
+   <com.google.android.material.floatingactionbutton.FloatingActionButton
+       android:id="@+id/btn_create_channel2"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_alignParentEnd="true"
+       android:layout_alignParentBottom="true"
+       android:layout_margin="16dp"
+       android:layout_marginTop="16dp"
+       android:layout_marginEnd="18dp"
+       android:layout_marginBottom="15dp"
+       android:background="@color/colorPrimaryDark"
+       android:src="@drawable/ic_action_name" />
 </RelativeLayout>

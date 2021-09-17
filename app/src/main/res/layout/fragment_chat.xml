@@ -25,8 +25,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="18dp"
         android:layout_marginBottom="15dp"
-        android:onClick="addChannel"
         android:background="@color/colorPrimaryDark"
-        android:src="@drawable/ic_action_name" />
+        android:src="@drawable/ic_action_message" />
 
 </RelativeLayout>

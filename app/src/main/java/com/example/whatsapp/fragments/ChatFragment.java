@@ -2,18 +2,12 @@ package com.example.whatsapp.fragments;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
-import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -22,11 +16,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.whatsapp.ChatActivity;
+import com.example.whatsapp.FindFriendsActivity;
 import com.example.whatsapp.R;
 import com.example.whatsapp.helper.Contacts;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
@@ -35,12 +29,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-
-import java.io.File;
-import java.io.IOException;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -48,7 +38,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class ChatFragment extends Fragment {
     View ChatFrag;
     RecyclerView chatsList;
-    FloatingActionButton b1;
+    FloatingActionButton findfriendbutton;
     DatabaseReference chatRef,UsersRef;
     FirebaseAuth auth;
     StorageReference storageReference;
@@ -70,11 +60,12 @@ public class ChatFragment extends Fragment {
 
         ChatFrag= inflater.inflate(R.layout.fragment_chat, container, false);
         chatsList=ChatFrag.findViewById(R.id.chats_list);
-        b1=ChatFrag.findViewById(R.id.btn_create_channel);
-        b1.setOnClickListener(new View.OnClickListener() {
+        findfriendbutton =ChatFrag.findViewById(R.id.btn_create_channel);
+        findfriendbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getContext(),"Hello",Toast.LENGTH_SHORT).show();
+                Intent intent=new Intent(getActivity(), FindFriendsActivity.class);
+                startActivity(intent);
             }
         });
         chatsList.setLayoutManager(new LinearLayoutManager(getContext()));
