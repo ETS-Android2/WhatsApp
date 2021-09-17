@@ -5,9 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".FindFriendsActivity">
+
     <include
-        layout="@layout/app_bar_layout"
-        android:id="@+id/find_friends_appbar">
+        android:id="@+id/find_friends_appbar"
+        layout="@layout/app_bar_layout">
 
     </include>
     <androidx.recyclerview.widget.RecyclerView

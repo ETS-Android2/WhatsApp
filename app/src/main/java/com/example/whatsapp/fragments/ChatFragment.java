@@ -11,7 +11,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -26,6 +28,7 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -45,6 +48,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class ChatFragment extends Fragment {
     View ChatFrag;
     RecyclerView chatsList;
+    FloatingActionButton b1;
     DatabaseReference chatRef,UsersRef;
     FirebaseAuth auth;
     StorageReference storageReference;
@@ -66,6 +70,13 @@ public class ChatFragment extends Fragment {
 
         ChatFrag= inflater.inflate(R.layout.fragment_chat, container, false);
         chatsList=ChatFrag.findViewById(R.id.chats_list);
+        b1=ChatFrag.findViewById(R.id.btn_create_channel);
+        b1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getContext(),"Hello",Toast.LENGTH_SHORT).show();
+            }
+        });
         chatsList.setLayoutManager(new LinearLayoutManager(getContext()));
         auth=FirebaseAuth.getInstance();
         currentUserID=auth.getCurrentUser().getUid();
