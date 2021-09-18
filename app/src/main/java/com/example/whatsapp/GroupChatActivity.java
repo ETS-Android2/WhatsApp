@@ -51,8 +51,7 @@ public class GroupChatActivity extends AppCompatActivity {
      RecyclerView find;
      ImageButton SendMessageButton;
      EditText userMessageInput;
-     Gp gp;
-      LinearLayoutManager linearLayoutManager;
+     LinearLayoutManager linearLayoutManager;
     private final List<Gp> messagesList = new ArrayList<>();
      GroupAdapter groupAdapter;
      String currentGroupName,currentUserId,currentUserName,currentDate,currentTime;

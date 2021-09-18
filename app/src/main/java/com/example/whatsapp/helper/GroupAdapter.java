@@ -47,18 +47,18 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.FindFriendVi
         String currentUserId=mAuth.getCurrentUser().getUid();
         if (uid.equals(currentUserId)) {
             holder.lls.setVisibility(View.VISIBLE);
-            holder.sender.setVisibility(View.VISIBLE);
             holder.llr.setVisibility(View.GONE);
-            holder.recicever.setVisibility(View.GONE);
-            holder.sender.setText(chatName + " :\n" + chatMessage + "\n" + chatTime + "  " + chatDate);
+            holder.sendermsg.setText(chatMessage);
+            holder.sname.setText(chatName);
+            holder.slst.setText("last seen : "+chatTime+" "+chatDate);
         }
         else
         {
             holder.lls.setVisibility(View.GONE);
-            holder.sender.setVisibility(View.GONE);
             holder.llr.setVisibility(View.VISIBLE);
-            holder.recicever.setVisibility(View.VISIBLE);
-            holder.recicever.setText(chatName + " :\n" + chatMessage + "\n" + chatTime + "  " + chatDate);
+            holder.recicevermsg.setText(chatMessage);
+            holder.rname.setText(chatName);
+            holder.rlst.setText("last seen : "+chatTime+" "+chatDate);
 
         }
     }
@@ -71,18 +71,21 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.FindFriendVi
     public static class FindFriendViewHolder extends RecyclerView.ViewHolder
     {
         LinearLayout lls,llr;
-        TextView sender,recicever;
+        TextView sendermsg,recicevermsg,sname,rname,slst,rlst;
 
         public FindFriendViewHolder(@NonNull View itemView) {
             super(itemView);
             llr=itemView.findViewById(R.id.llrg);
             lls=itemView.findViewById(R.id.llsg);
-            recicever=itemView.findViewById(R.id.reciever_messages_group);
-            sender=itemView.findViewById(R.id.sender_messages_group);
+            recicevermsg=itemView.findViewById(R.id.reciever_messages_group);
+            sendermsg=itemView.findViewById(R.id.sender_messages_group);
+            sname=itemView.findViewById(R.id.sender_messages_username);
+            rname=itemView.findViewById(R.id.reciever_messages_username);
+            slst=itemView.findViewById(R.id.sender_messages_lastssen);
+            rlst=itemView.findViewById(R.id.reciever_messages_lastseen);
             llr.setVisibility(View.GONE);
             lls.setVisibility(View.GONE);
-            recicever.setVisibility(View.GONE);
-            sender.setVisibility(View.GONE);
+
         }
     }
 }
