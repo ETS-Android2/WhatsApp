@@ -241,10 +241,6 @@
 
 
          }
-         if(item.getItemId()==R.id.main_find_friends)
-         {
-             sendUserToFFActivity();
-         }
          return true;
 
      }

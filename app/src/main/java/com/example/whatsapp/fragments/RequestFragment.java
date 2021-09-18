@@ -34,6 +34,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.whatsapp.FindFriendsActivity;
 import com.example.whatsapp.MainActivity;
 import com.example.whatsapp.R;
 import com.example.whatsapp.helper.Contacts;
@@ -43,6 +44,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -63,6 +65,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class RequestFragment extends Fragment {
     View RequestFrag;
     RecyclerView recyclerView;
+    FloatingActionButton findfriendbutton;
     DatabaseReference chatRequestRef,UsersRef,ContactsRef;
     String currentUserID;
     FirebaseAuth mAuth;
@@ -79,6 +82,14 @@ public class RequestFragment extends Fragment {
                              Bundle savedInstanceState) {
         RequestFrag= inflater.inflate(R.layout.fragment_request, container, false);
         recyclerView=RequestFrag.findViewById(R.id.chat_request_list);
+        findfriendbutton=RequestFrag.findViewById(R.id.btn_create_channel3);
+        findfriendbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(getActivity(), FindFriendsActivity.class);
+                startActivity(intent);
+            }
+        });
         chatRequestRef= FirebaseDatabase.getInstance().getReference().child("Chat Requests");
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mAuth=FirebaseAuth.getInstance();
