@@ -92,10 +92,11 @@ public class ChatFragment extends Fragment {
         Initialize();
 
         RetriveandDisplayGroups();
-
+        list_View.setNestedScrollingEnabled(false);
+        chatsList.setNestedScrollingEnabled(false);
         return ChatFrag;
     }
-    private void RetriveandDisplayGroups() {
+    public void RetriveandDisplayGroups() {
         GroupRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -126,6 +127,7 @@ public class ChatFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
+        RetriveandDisplayGroups();
         FirebaseRecyclerOptions<Contacts> options =
                 new FirebaseRecyclerOptions.Builder<Contacts>()
                 .setQuery(chatRef,Contacts.class)

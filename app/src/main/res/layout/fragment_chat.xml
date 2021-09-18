@@ -3,9 +3,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragments.ChatFragment">
-
-
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:orientation="vertical"
+          android:layout_height="match_parent">
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/chats_list"
         android:layout_width="match_parent"
@@ -14,14 +20,17 @@
         android:layout_alignParentTop="true">
 
     </androidx.recyclerview.widget.RecyclerView>
-    <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:id="@+id/group_List"
-        android:layout_below="@+id/chats_list"
-        android:layout_height="wrap_content">
 
-    </androidx.recyclerview.widget.RecyclerView>
+          <androidx.recyclerview.widget.RecyclerView
+              android:id="@+id/group_List"
 
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_below="@+id/chats_list">
+
+          </androidx.recyclerview.widget.RecyclerView>
+      </LinearLayout>
+</ScrollView>
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/btn_create_channel"
         android:layout_width="wrap_content"
