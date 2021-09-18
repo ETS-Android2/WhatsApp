@@ -208,10 +208,7 @@
          Intent mainIntent = new Intent(MainActivity.this, SettingsActivity.class);
          startActivity(mainIntent);
      }
-     private void sendUserToFFActivity() {
-         Intent mainIntent = new Intent(MainActivity.this, FindFriendsActivity.class);
-         startActivity(mainIntent);
-     }
+
 
      @Override
      public boolean onCreateOptionsMenu(Menu menu) {
@@ -285,9 +282,9 @@
                     public void onComplete(@NonNull Task<Void> task) {
                         if(task.isSuccessful())
                         {
+
                             Toast.makeText(getApplicationContext(), groupName+" group is Created Successfully ...", Toast.LENGTH_SHORT).show();
-                            finish();
-                            startActivity(getIntent());
+                            recreate();
                         }
                     }
                 });

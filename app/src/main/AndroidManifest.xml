@@ -23,39 +23,50 @@
         tools:targetApi="m">
         <activity
             android:name=".StatusActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".IMageViewActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ChatActivity"
             android:exported="true"
-            android:parentActivityName=".MainActivity" />
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ProfileActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".FindFriendsActivity"
-            android:parentActivityName=".MainActivity" />
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait"
+            />
         <activity
             android:name=".loginsignup.PhoneLogInActivity"
             android:exported="true" />
         <activity
             android:name=".GroupChatActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".Settings.SettingsActivity"
             android:exported="true"
-            android:parentActivityName=".MainActivity" />
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".loginsignup.RegisterActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".loginsignup.LogInActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".MainActivity"
-            android:exported="true">
+            android:exported="true"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -64,7 +75,8 @@
         </activity>
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
-            android:theme="@style/Base.Theme.AppCompat" />
+            android:theme="@style/Base.Theme.AppCompat"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

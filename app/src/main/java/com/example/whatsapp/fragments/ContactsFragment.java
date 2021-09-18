@@ -66,6 +66,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.UUID;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -245,7 +246,7 @@ public class ContactsFragment extends Fragment {
         storageReference.child("Status/" + userid + ".jpg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
-                Glide.with(getContext()).load(uri).into(userProfileImg);
+                Glide.with(requireContext()).load(uri).into(userProfileImg);
 
             }
         }).addOnFailureListener(new OnFailureListener() {
