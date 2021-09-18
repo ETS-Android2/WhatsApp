@@ -116,7 +116,6 @@ public class ContactsFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
             filePath = data.getData();
-            Toast.makeText(getContext(), ""+filePath, Toast.LENGTH_SHORT).show();
             if(filePath != null){
                 final ProgressDialog progressDialog = new ProgressDialog(getContext());
                 progressDialog.setTitle("Uploading");

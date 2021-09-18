@@ -290,6 +290,8 @@
                         if(task.isSuccessful())
                         {
                             Toast.makeText(getApplicationContext(), groupName+" group is Created Successfully ...", Toast.LENGTH_SHORT).show();
+                            finish();
+                            startActivity(getIntent());
                         }
                     }
                 });
