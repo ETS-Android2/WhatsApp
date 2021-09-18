@@ -103,7 +103,6 @@ public class ChatActivity extends AppCompatActivity {
         messagerECIVERiMAGE=getIntent().getExtras().get("visit_image").toString();
         toolbar=findViewById(R.id.chat_activity_toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("");
         userName=(TextView)findViewById(R.id.custom_profile_name);
         UserLastSeen=(TextView)findViewById(R.id.custom_user_last_seen);
