@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_height="wrap_content"
+    android:layout_width="match_parent">
+
+
+               <LinearLayout 
+               android:id="@+id/llrg" 
+                  android:layout_width="wrap_content" 
+                 android:layout_height="wrap_content" 
+                android:layout_alignParentStart="true" 
+                   android:layout_margin="10dp" 
+                  android:background="@drawable/reciver_message_layout" 
+                  android:orientation="vertical"> 
+
+                 <TextView 
+                     android:id="@+id/reciever_messages_group" 
+                    android:layout_width="wrap_content" 
+                       android:layout_height="wrap_content" 
+                     android:paddingStart="20dp" 
+                     android:paddingTop="5dp" 
+                   android:paddingEnd="7dp" 
+                      android:paddingBottom="3dp" 
+                      android:text="receiver messages here" 
+                        android:textColor="@android:color/black" 
+                       android:textSize="17sp"> 
+
+                </TextView> 
+               </LinearLayout> 
+
+               <LinearLayout 
+                 android:id="@+id/llsg" 
+                  android:layout_width="wrap_content" 
+                 android:layout_height="wrap_content" 
+                  android:layout_alignParentEnd="true" 
+                  android:layout_margin="10dp" 
+                  android:background="@drawable/sender_message_layout" 
+               android:orientation="vertical">
+
+               <TextView 
+                  android:id="@+id/sender_messages_group"
+                     android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                      android:paddingStart="8dp" 
+                       android:paddingTop="5dp" 
+                      android:paddingEnd="20dp" 
+                       android:paddingBottom="5dp" 
+                       android:text="sender messages" 
+                      android:textColor="@android:color/black" 
+                      android:textSize="17sp">
+                    </TextView>
+               </LinearLayout>
+          </RelativeLayout>

@@ -3,38 +3,41 @@
     android:layout_width="wrap_content"
     android:layout_margin="10dp"
     android:layout_height="wrap_content">
-<LinearLayout
-    android:layout_width="wrap_content"
-    android:id="@+id/llr"
-    android:orientation="vertical"
-    android:background="@drawable/reciver_message_layout"
-    android:layout_height="wrap_content">
-    <TextView
-        android:id="@+id/reciever_messages"
+
+    <LinearLayout
+        android:id="@+id/llr"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingStart="20dp"
-        android:paddingTop="5dp"
-        android:paddingEnd="7dp"
-        android:paddingBottom="3dp"
-        android:text="receiver messages here"
-        android:textColor="@android:color/black"
-        android:textSize="17sp">
+        android:background="@drawable/reciver_message_layout"
+        android:orientation="vertical">
 
-    </TextView>
-    <TextView
-        android:id="@+id/reciever_messages_td"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingStart="15dp"
-        android:paddingTop="5dp"
-        android:paddingEnd="7dp"
-        android:paddingBottom="3dp"
-        android:text="receiver messages here"
-        android:textSize="10sp">
+        <TextView
+            android:id="@+id/reciever_messages"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="20dp"
+            android:paddingTop="5dp"
+            android:paddingEnd="7dp"
+            android:paddingBottom="3dp"
+            android:text="receiver messages here"
+            android:textColor="@android:color/black"
+            android:textSize="17sp">
 
-    </TextView>
-</LinearLayout>
+        </TextView>
+
+        <TextView
+            android:id="@+id/reciever_messages_td"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="15dp"
+            android:paddingTop="5dp"
+            android:paddingEnd="7dp"
+            android:paddingBottom="3dp"
+            android:text="receiver messages here"
+            android:textSize="10sp">
+
+        </TextView>
+    </LinearLayout>
 
     <ImageView
         android:id="@+id/receiver_sender_image_view"
@@ -49,48 +52,50 @@
         android:scaleType="centerCrop">
 
     </ImageView>
-<LinearLayout
-    android:layout_width="wrap_content"
-    android:id="@+id/lls"
-    android:orientation="vertical"
-    android:layout_alignParentTop="true"
-    android:layout_alignParentEnd="true"
-    android:background="@drawable/sender_message_layout"
-    android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/sender_messages"
+    <LinearLayout
+        android:id="@+id/lls"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/llr"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:paddingStart="8dp"
-        android:paddingTop="5dp"
-        android:paddingEnd="20dp"
-        android:paddingBottom="5dp"
-        android:text="sender messages"
-        android:textColor="@android:color/black"
-        android:textSize="17sp">
+        android:background="@drawable/sender_message_layout"
+        android:orientation="vertical">
 
-    </TextView>
-    <TextView
-        android:id="@+id/sender_messages_td"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/llr"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:paddingStart="8dp"
-        android:paddingTop="5dp"
-        android:paddingEnd="15dp"
-        android:paddingBottom="5dp"
-        android:text="sender messages"
-        android:textColor="@android:color/black"
-        android:textSize="10sp">
+        <TextView
+            android:id="@+id/sender_messages"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/llr"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:paddingStart="8dp"
+            android:paddingTop="5dp"
+            android:paddingEnd="20dp"
+            android:paddingBottom="5dp"
+            android:text="sender messages"
+            android:textColor="@android:color/black"
+            android:textSize="17sp">
 
-    </TextView>
-</LinearLayout>
+        </TextView>
+
+        <TextView
+            android:id="@+id/sender_messages_td"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/llr"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:paddingStart="8dp"
+            android:paddingTop="5dp"
+            android:paddingEnd="15dp"
+            android:paddingBottom="5dp"
+            android:text="sender messages"
+            android:textColor="@android:color/black"
+            android:textSize="10sp">
+
+        </TextView>
+    </LinearLayout>
 
     <ImageView
         android:id="@+id/messager_sender_image_view"

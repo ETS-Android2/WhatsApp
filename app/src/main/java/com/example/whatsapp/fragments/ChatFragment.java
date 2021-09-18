@@ -7,7 +7,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -18,8 +20,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.whatsapp.ChatActivity;
 import com.example.whatsapp.FindFriendsActivity;
+import com.example.whatsapp.GroupChatActivity;
 import com.example.whatsapp.R;
 import com.example.whatsapp.helper.Contacts;
+import com.example.whatsapp.helper.MyRecyclerViewAdapter;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -33,6 +37,10 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 
 
@@ -44,6 +52,10 @@ public class ChatFragment extends Fragment {
     FirebaseAuth auth;
     StorageReference storageReference;
     String currentUserID;
+    RecyclerView list_View;
+    ArrayList<String> list_of_groups=new ArrayList<>();
+    MyRecyclerViewAdapter adapter;
+    DatabaseReference GroupRef;
 
     public ChatFragment() {
 
@@ -76,9 +88,41 @@ public class ChatFragment extends Fragment {
                 .child("Contacts").child(currentUserID);
         UsersRef=FirebaseDatabase.getInstance().getReference()
                 .child("Users");
+        GroupRef= FirebaseDatabase.getInstance().getReference().child("Groups");
+        Initialize();
+
+        RetriveandDisplayGroups();
+
         return ChatFrag;
     }
+    private void RetriveandDisplayGroups() {
+        GroupRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Set<String> set = new HashSet<>();
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    set.add((dataSnapshot).getKey());
+                }
+                list_of_groups.clear();
+                list_of_groups.addAll(set);
 
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        adapter = new MyRecyclerViewAdapter(getContext(), list_of_groups);
+        list_View.setAdapter(adapter);
+    }
+
+    private void Initialize()
+    {
+        list_View =  ChatFrag.findViewById(R.id.group_List);
+        list_View.setLayoutManager(new LinearLayoutManager(getContext()));
+
+    }
     @Override
     public void onStart() {
         super.onStart();
@@ -168,6 +212,9 @@ public class ChatFragment extends Fragment {
         chatsList.setAdapter(adapter);
         adapter.startListening();
     }
+
+
+
     public static class ChatsViewHolder extends RecyclerView.ViewHolder {
         CircleImageView profileImage;
         TextView userStatus , userName,contact_status;
@@ -183,6 +230,7 @@ public class ChatFragment extends Fragment {
 
         }
     }
+
     public void GetImage(String currentUser, CircleImageView imageView, Context context) {
         storageReference = FirebaseStorage.getInstance().getReference();
         storageReference.child("Profile Images/" + currentUser + ".jpg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {

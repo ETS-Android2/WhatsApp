@@ -6,40 +6,78 @@
     android:background="@drawable/chat_wallpaper"
     android:layout_height="match_parent"
     tools:context=".GroupChatActivity">
+
     <include
         android:id="@+id/group_chat_bar_layout"
-        layout="@layout/app_bar_layout"
-        />
+        layout="@layout/app_bar_layout" />
 
-    <ScrollView
-        android:id="@+id/my_scroll_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/myLinearLayout"
-        android:layout_below="@id/group_chat_bar_layout">
+<!--    <ScrollView-->
+<!--        android:id="@+id/my_scroll_view"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="50dp"-->
+<!--        android:layout_above="@+id/myLinearLayout"-->
+<!--        android:layout_below="@id/group_chat_bar_layout">-->
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+<!--        <RelativeLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content">-->
 
-            <TextView
-                android:id="@+id/group_chat_text_display"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginBottom="60dp"
-                android:padding="10dp"
-                android:textStyle="bold"
-                android:text=""
-                android:textAllCaps="false"
-                android:textColor="@android:color/background_dark"
-                android:textSize="15sp"></TextView>
+<!--            <LinearLayout-->
+<!--                android:id="@+id/llrg"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_alignParentStart="true"-->
+<!--                android:layout_margin="10dp"-->
+<!--                android:background="@drawable/reciver_message_layout"-->
+<!--                android:orientation="vertical">-->
 
+<!--                <TextView-->
+<!--                    android:id="@+id/reciever_messages_group"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:paddingStart="20dp"-->
+<!--                    android:paddingTop="5dp"-->
+<!--                    android:paddingEnd="7dp"-->
+<!--                    android:paddingBottom="3dp"-->
+<!--                    android:text="receiver messages here"-->
+<!--                    android:textColor="@android:color/black"-->
+<!--                    android:textSize="17sp">-->
 
-        </LinearLayout>
-    </ScrollView>
+<!--                </TextView>-->
+<!--            </LinearLayout>-->
+
+<!--            <LinearLayout-->
+<!--                android:id="@+id/llsg"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_alignParentEnd="true"-->
+<!--                android:layout_margin="10dp"-->
+<!--                android:background="@drawable/sender_message_layout"-->
+<!--                android:orientation="vertical">-->
+
+<!--                <TextView-->
+<!--                    android:id="@+id/sender_messages_group"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:paddingStart="8dp"-->
+<!--                    android:paddingTop="5dp"-->
+<!--                    android:paddingEnd="20dp"-->
+<!--                    android:paddingBottom="5dp"-->
+<!--                    android:text="sender messages"-->
+<!--                    android:textColor="@android:color/black"-->
+<!--                    android:textSize="17sp">-->
+
+<!--                </TextView>-->
+<!--            </LinearLayout>-->
+<!--        </RelativeLayout>-->
+<!--    </ScrollView>-->
+   <androidx.recyclerview.widget.RecyclerView
+       android:layout_width="match_parent"
+       android:id="@+id/recyclerviewgroup"
+       android:layout_above="@+id/myLinearLayout"
+       android:layout_below="@+id/group_chat_bar_layout"
+       android:layout_height="match_parent">
+   </androidx.recyclerview.widget.RecyclerView>
     <androidx.cardview.widget.CardView
         android:layout_width="wrap_content"
         android:layout_margin="5dp"
