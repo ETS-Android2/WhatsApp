@@ -52,9 +52,9 @@ public class ChatFragment extends Fragment {
     FirebaseAuth auth;
     StorageReference storageReference;
     String currentUserID;
-    RecyclerView list_View;
-    ArrayList<String> list_of_groups=new ArrayList<>();
-    MyRecyclerViewAdapter adapter;
+//    RecyclerView list_View;
+//    ArrayList<String> list_of_groups=new ArrayList<>();
+//    MyRecyclerViewAdapter adapter;
     DatabaseReference GroupRef;
 
     public ChatFragment() {
@@ -89,40 +89,40 @@ public class ChatFragment extends Fragment {
         UsersRef=FirebaseDatabase.getInstance().getReference()
                 .child("Users");
         GroupRef= FirebaseDatabase.getInstance().getReference().child("Groups");
-        Initialize();
+//        Initialize();
 
-        RetriveandDisplayGroups();
+//        RetriveandDisplayGroups();
 
         return ChatFrag;
     }
-    private void RetriveandDisplayGroups() {
-        GroupRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Set<String> set = new HashSet<>();
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    set.add((dataSnapshot).getKey());
-                }
-                list_of_groups.clear();
-                list_of_groups.addAll(set);
+//    private void RetriveandDisplayGroups() {
+//        GroupRef.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                Set<String> set = new HashSet<>();
+//                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+//                    set.add((dataSnapshot).getKey());
+//                }
+//                list_of_groups.clear();
+//                list_of_groups.addAll(set);
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//        });
+//        adapter = new MyRecyclerViewAdapter(getContext(), list_of_groups);
+//        list_View.setAdapter(adapter);
+//    }
 
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-        adapter = new MyRecyclerViewAdapter(getContext(), list_of_groups);
-        list_View.setAdapter(adapter);
-    }
-
-    private void Initialize()
-    {
-        list_View =  ChatFrag.findViewById(R.id.group_List);
-        list_View.setLayoutManager(new LinearLayoutManager(getContext()));
-
-    }
+//    private void Initialize()
+//    {
+//        list_View =  ChatFrag.findViewById(R.id.group_List);
+//        list_View.setLayoutManager(new LinearLayoutManager(getContext()));
+//
+//    }
     @Override
     public void onStart() {
         super.onStart();

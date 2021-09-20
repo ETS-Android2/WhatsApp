@@ -20,6 +20,8 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
@@ -85,7 +87,7 @@ public class ChatActivity extends AppCompatActivity {
     StorageReference storageReference;
     RecyclerView recyclerView;
     private final List<Messages> messagesList = new ArrayList<>();
-    private String saveCurrentTime, saveCurrentDate,checker="", myUrl="";
+    private String saveCurrentTime, saveCurrentDate,checker="";
     private UploadTask uploadTask;
 
     @Override
@@ -448,5 +450,33 @@ public class ChatActivity extends AppCompatActivity {
                     }
                 });
     }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        getMenuInflater().inflate(R.menu.chat_menu,menu);
+        return true;
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        super.onOptionsItemSelected(item);
+        if(item.getItemId()==R.id.view_contact)
+        {
+            sendUserToChatActivity();
+        }
+        if(item.getItemId()==R.id.remove_contact)
+        {
+            sendUserToChatActivity();
+
+        }
+
+        return true;
+
+    }
+
+    private void sendUserToChatActivity() {
+        Intent profileIntent=new Intent(ChatActivity.this,ProfileActivity.class);
+        profileIntent.putExtra("visit_user_id",messageRecievedID);
+        startActivity(profileIntent);
+    }
 }

@@ -182,7 +182,7 @@ public class ContactsFragment extends Fragment {
                         e.printStackTrace();
                     }
 
-                    if (now.before(val)) {
+                    if (val.after(now)) {
                         holder.uh.setVisibility(View.VISIBLE);
                         holder.h.setVisibility(View.GONE);
                         holder.userName.setText(model.getName());
@@ -247,12 +247,11 @@ public class ContactsFragment extends Fragment {
             @Override
             public void onSuccess(Uri uri) {
                 Glide.with(requireContext()).load(uri).into(userProfileImg);
-
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception exception) {
-
+                Toast.makeText(getContext(), "Image not fetched", Toast.LENGTH_SHORT).show();
             }
         });
     }
