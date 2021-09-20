@@ -9,14 +9,18 @@
 
     <include
         android:id="@+id/chat_activity_toolbar"
-        layout="@layout/custom_chat_bar"></include>
+        layout="@layout/custom_chat_bar">
+
+    </include>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/private_messages_list_of_users"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/cardView"
-        android:layout_below="@+id/chat_activity_toolbar"></androidx.recyclerview.widget.RecyclerView>
+        android:layout_below="@+id/chat_activity_toolbar">
+
+    </androidx.recyclerview.widget.RecyclerView>
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_margin="5dp"
