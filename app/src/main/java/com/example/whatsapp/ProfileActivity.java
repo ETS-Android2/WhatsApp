@@ -1,11 +1,14 @@
 package com.example.whatsapp;
 
+import static com.example.whatsapp.ChatActivity.removedContact;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -18,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.whatsapp.fragments.ChatFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -198,6 +202,7 @@ public class ProfileActivity extends AppCompatActivity {
                                 .addOnCompleteListener(task1 -> {
                                     if(task1.isSuccessful())
                                     {
+                                        removedContact=1;
                                         SendMessageRequest.setEnabled(true);
                                         Current_State="new";
                                         SendMessageRequest.setText("Send Message");
@@ -364,5 +369,16 @@ public class ProfileActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        if(removedContact==1)
+        {
+            Intent in = new Intent(ProfileActivity.this, MainActivity.class);
+            startActivity(in);
+            removedContact=0;
+        }
     }
 }

@@ -4,6 +4,13 @@
 
 
 
+
+<!-- <item-->
+<!--     android:title="create new group"-->
+<!--     android:id="@+id/main_seetings"-->
+<!--     app:showAsAction="never">-->
+
+<!-- </item>-->
  <item
      android:title="@string/settings"
      android:id="@+id/main_seetings"

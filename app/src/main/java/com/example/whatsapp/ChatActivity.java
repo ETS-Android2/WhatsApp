@@ -74,6 +74,7 @@ public class ChatActivity extends AppCompatActivity {
 
     ImageButton senMessage,sendFiles;
     EditText message;
+    public static int removedContact=0;
     String messageRecievedID, messageReciveName,messagerECIVERiMAGE="",messageSenderId;
     TextView userName,UserLastSeen;
     Toolbar toolbar;
@@ -112,7 +113,8 @@ public class ChatActivity extends AppCompatActivity {
         contactsetting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                sendUserToChatActivity();}
+                sendUserToChatActivity();
+            }
         });
         userName=(TextView)findViewById(R.id.custom_profile_name);
         UserLastSeen=(TextView)findViewById(R.id.custom_user_last_seen);
