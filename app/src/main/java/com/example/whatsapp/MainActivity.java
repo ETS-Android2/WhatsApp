@@ -236,20 +236,20 @@
 
 
 
-     private void CreateNewGroup(String groupName) {
-        RootRef.child("Groups").child(groupName).setValue("")
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if(task.isSuccessful())
-                        {
-
-                            Toast.makeText(getApplicationContext(), groupName+" group is Created Successfully ...", Toast.LENGTH_SHORT).show();
-                            recreate();
-                        }
-                    }
-                });
-     }
+//     private void CreateNewGroup(String groupName) {
+//        RootRef.child("Groups").child(groupName).setValue("")
+//                .addOnCompleteListener(new OnCompleteListener<Void>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<Void> task) {
+//                        if(task.isSuccessful())
+//                        {
+//
+//                            Toast.makeText(getApplicationContext(), groupName+" group is Created Successfully ...", Toast.LENGTH_SHORT).show();
+//                            recreate();
+//                        }
+//                    }
+//                });
+//     }
 
  }
 
