@@ -464,11 +464,6 @@ public class ChatActivity extends AppCompatActivity {
         {
             sendUserToChatActivity();
         }
-        if(item.getItemId()==R.id.remove_contact)
-        {
-            sendUserToChatActivity();
-
-        }
 
         return true;
 
