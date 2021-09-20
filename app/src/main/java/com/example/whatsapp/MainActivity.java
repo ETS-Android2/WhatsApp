@@ -229,51 +229,12 @@
          if(item.getItemId()==R.id.main_seetings)
          {
              sendUserToSeetingsActivity();
-
-
-         }
-         if(item.getItemId()==R.id.main_create_group)
-         {
-            RequestNewGroup();
-
-
          }
          return true;
 
      }
 
-     private void RequestNewGroup() {
-         AlertDialog.Builder builder= new AlertDialog.Builder(this,R.style.AlertDialog);
-         builder.setTitle("Enter Group Name :");
-         final EditText groupNameField=new EditText(this);
-         groupNameField.setHint("  e.g.  NullClass");
-         groupNameField.setGravity(View.TEXT_ALIGNMENT_CENTER);
-         builder.setView(groupNameField);
-         builder.setPositiveButton("Create", new DialogInterface.OnClickListener() {
-             @Override
-             public void onClick(DialogInterface dialogInterface, int i) {
-                 String groupName=groupNameField.getText().toString();
-                 if(TextUtils.isEmpty(groupName))
-                 {
-                     Toast.makeText(getApplicationContext(), "Please write Group Name", Toast.LENGTH_SHORT).show();
-                 }
-                 else
-                 {
-                          CreateNewGroup(groupName);
-                 }
-             }
-         });
-         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-             @Override
-             public void onClick(DialogInterface dialogInterface, int i) {
-                 dialogInterface.cancel();
-                 dialogInterface.dismiss();
-             }
-             });
-          builder.show();
 
-
-     }
 
      private void CreateNewGroup(String groupName) {
         RootRef.child("Groups").child(groupName).setValue("")

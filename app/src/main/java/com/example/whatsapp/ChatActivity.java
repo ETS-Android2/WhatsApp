@@ -24,6 +24,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -79,6 +80,7 @@ public class ChatActivity extends AppCompatActivity {
     FirebaseAuth mauth;
     DatabaseReference RootRef;
     FirebaseAuth mAuth;
+    Button contactsetting;
     CircleImageView userImage;
     Uri fileUri;
     ProgressDialog pd;
@@ -106,6 +108,12 @@ public class ChatActivity extends AppCompatActivity {
         toolbar=findViewById(R.id.chat_activity_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("");
+        contactsetting=(Button)findViewById(R.id.contactsettings);
+        contactsetting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sendUserToChatActivity();}
+        });
         userName=(TextView)findViewById(R.id.custom_profile_name);
         UserLastSeen=(TextView)findViewById(R.id.custom_user_last_seen);
         userImage=(CircleImageView) findViewById(R.id.custom_profile_image);
@@ -450,24 +458,7 @@ public class ChatActivity extends AppCompatActivity {
                     }
                 });
     }
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        super.onCreateOptionsMenu(menu);
-        getMenuInflater().inflate(R.menu.chat_menu,menu);
-        return true;
-    }
 
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        super.onOptionsItemSelected(item);
-        if(item.getItemId()==R.id.view_contact)
-        {
-            sendUserToChatActivity();
-        }
-
-        return true;
-
-    }
 
     private void sendUserToChatActivity() {
         Intent profileIntent=new Intent(ChatActivity.this,ProfileActivity.class);
