@@ -187,7 +187,13 @@ public class ContactsFragment extends Fragment {
                         holder.h.setVisibility(View.GONE);
                         holder.userName.setText(model.getName());
                         holder.userStatus.setText(model.getStatus());
-                        GetImage(holder.profileImage, model.getuid());
+
+                        try {
+                            GetImage(holder.profileImage, model.getuid());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
                         holder.profileImage.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
@@ -241,17 +247,19 @@ public class ContactsFragment extends Fragment {
 
         }
     }
-    public void GetImage(CircleImageView userProfileImg ,String userid) {
-        StorageReference storageReference = FirebaseStorage.getInstance().getReference();
-        storageReference.child("Status/" + userid + ".jpg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+    public void GetImage(CircleImageView userProfileImg ,String userid) throws IOException {
+        StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("Status/" +userid + ".jpg");
+        File localFile = File.createTempFile(userid , ".jpg");
+        storageReference.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
             @Override
-            public void onSuccess(Uri uri) {
-                Glide.with(requireContext()).load(uri).into(userProfileImg);
+            public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                Bitmap bmImg = BitmapFactory.decodeFile(localFile.getAbsolutePath());
+                userProfileImg.setImageBitmap(bmImg);
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception exception) {
-                Toast.makeText(getContext(), "Image not fetched", Toast.LENGTH_SHORT).show();
+                // Handle any errors
             }
         });
     }

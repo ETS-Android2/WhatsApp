@@ -72,6 +72,8 @@ public class SettingsActivity extends AppCompatActivity {
     StorageReference storageReference;
     ProgressDialog progressDialog;
     Toolbar toolbar;
+    String timeuploaded="" ;
+    String valid="" ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -127,6 +129,10 @@ public class SettingsActivity extends AppCompatActivity {
                     GetImage();
                     String rusername = Objects.requireNonNull(snapshot.child("name").getValue()).toString();
                     String rstatus = Objects.requireNonNull(snapshot.child("status").getValue()).toString();
+                    if (snapshot.hasChild("timeuploaded") && snapshot.hasChild("valid") ) {
+                        timeuploaded = snapshot.child("timeuploaded").getValue().toString();
+                        valid = snapshot.child("valid").getValue().toString();
+                    }
                     username.setText(rusername);
                     status.setText(rstatus);
 
@@ -134,6 +140,10 @@ public class SettingsActivity extends AppCompatActivity {
                 else if ((snapshot.exists()) && snapshot.hasChild("name")) {
                     String rusername = Objects.requireNonNull(snapshot.child("name").getValue()).toString();
                     String rstatus = Objects.requireNonNull(snapshot.child("status").getValue()).toString();
+                    if (snapshot.hasChild("timeuploaded") && snapshot.hasChild("valid") ) {
+                        timeuploaded = snapshot.child("timeuploaded").getValue().toString();
+                        valid = snapshot.child("valid").getValue().toString();
+                    }
                     username.setText(rusername);
                     status.setText(rstatus);
 
@@ -154,6 +164,7 @@ public class SettingsActivity extends AppCompatActivity {
     public void UpdateSettings() {
         String setUsername = username.getText().toString();
         String setStatus = status.getText().toString();
+
         if (TextUtils.isEmpty(setUsername)) {
             username.setError("Please username First");
 
@@ -174,6 +185,12 @@ public class SettingsActivity extends AppCompatActivity {
             if(image!=null)
             {
                 profileMap.put("image",image);
+            }
+            if (!timeuploaded.isEmpty() && !valid.isEmpty())
+            {
+                profileMap.put("timeuploaded",timeuploaded);
+                profileMap.put("valid",valid);
+
             }
             RootRef.child("Users").child(currentUser).setValue(profileMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
