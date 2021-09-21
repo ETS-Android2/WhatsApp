@@ -14,7 +14,7 @@
         android:orientation="horizontal"
         android:layout_height="wrap_content">
       <de.hdodenhof.circleimageview.CircleImageView
-        android:layout_width="60dp"
+        android:layout_width="50dp"
         android:cropToPadding="true"
         android:src="@drawable/profile_image"
           android:id="@+id/custom_image"
@@ -28,7 +28,7 @@
             android:layout_margin="20dp"
             android:textColor="@android:color/background_light"
             android:textStyle="bold"
-            android:textSize="20dp"
+            android:textSize="15dp"
             android:layout_height="wrap_content">
         </TextView>
     </LinearLayout>
@@ -39,7 +39,7 @@
         android:gravity="center"
         android:id="@+id/user_status_act"
         android:textColor="@android:color/background_light"
-        android:textSize="15dp"
+        android:textSize="12dp"
         android:layout_height="wrap_content">
     </TextView>
     <ProgressBar

@@ -12,8 +12,8 @@
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/users_profile_image"
-            android:layout_width="85dp"
-            android:layout_height="85dp"
+            android:layout_width="50dp"
+            android:layout_height="65dp"
             android:layout_marginStart="10dp"
             android:src="@drawable/profile_image"></de.hdodenhof.circleimageview.CircleImageView>
 
@@ -35,10 +35,10 @@
                     android:id="@+id/users_profile_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="user name"
                     android:singleLine="true"
+                    android:text="user name"
                     android:textAlignment="textStart"
-                    android:textSize="18sp"
+                    android:textSize="15sp"
                     android:textStyle="bold"></TextView>
 
                 <ImageView
@@ -48,44 +48,45 @@
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="8dp"
                     android:src="@drawable/online"
-                    android:visibility="invisible"
-                    >
+                    android:visibility="invisible">
 
                 </ImageView>
             </LinearLayout>
+
             <TextView
                 android:id="@+id/contact_status"
                 android:layout_width="250dp"
-                android:visibility="gone"
-                android:singleLine="true"
                 android:layout_height="wrap_content"
+                android:singleLine="true"
                 android:text="contact status"
                 android:textAlignment="textStart"
-                android:textSize="14sp"></TextView>
+                android:textSize="14sp"
+                android:visibility="gone"></TextView>
+
             <TextView
 
                 android:id="@+id/users_status"
                 android:layout_width="250dp"
-                android:singleLine="true"
                 android:layout_height="wrap_content"
+                android:singleLine="true"
                 android:text="user name"
                 android:textAlignment="textStart"
                 android:textSize="12sp"></TextView>
 
             <LinearLayout
-                android:layout_marginTop="8dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 android:orientation="horizontal">
 
                 <Button
                     android:id="@+id/request_accept_btn"
                     android:layout_width="wrap_content"
-                    android:layout_height="30dp"
+                    android:layout_height="20dp"
                     android:background="@android:color/holo_green_light"
                     android:text="Accept"
                     android:textAllCaps="false"
-                    android:textSize="18dp"
+                    android:textSize="15dp"
                     android:visibility="invisible">
 
                 </Button>
@@ -93,13 +94,13 @@
                 <Button
                     android:id="@+id/request_cancel_btn"
                     android:layout_width="wrap_content"
-                    android:layout_height="30dp"
+                    android:layout_height="20dp"
                     android:layout_marginStart="10dp"
                     android:background="@android:color/holo_red_light"
                     android:text="Cancel"
                     android:textAllCaps="false"
                     android:textColor="@android:color/background_light"
-                    android:textSize="18dp"
+                    android:textSize="15dp"
                     android:visibility="invisible">
 
                 </Button>
