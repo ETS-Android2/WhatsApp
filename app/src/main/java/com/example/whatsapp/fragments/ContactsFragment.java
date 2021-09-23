@@ -64,6 +64,8 @@ public class ContactsFragment extends Fragment {
     private Uri filePath;
     private final int PICK_IMAGE_REQUEST = 22;
     DatabaseReference UserRef;
+    private String CurrentDate;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -114,7 +116,7 @@ public class ContactsFragment extends Fragment {
                     }
 
                     assert val != null;
-                    if (val.getTime()<now.getTime()) {
+                    if (val.getTime()>now.getTime()) {
                         holder.uh.setVisibility(View.VISIBLE);
                         holder.h.setVisibility(View.GONE);
                         holder.userName.setText(model.getName());
@@ -179,7 +181,7 @@ public class ContactsFragment extends Fragment {
                             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                                 progressDialog.dismiss();
                                 Calendar c=Calendar.getInstance();
-                                c.add(Calendar.HOUR,6);
+                                c.add(Calendar.DATE,1);
                                 Date validate=c.getTime();
                                 Date date = Calendar.getInstance().getTime();
                                 DateFormat dateFormat = new SimpleDateFormat("hh:mm:ss dd-MM-yyyy");

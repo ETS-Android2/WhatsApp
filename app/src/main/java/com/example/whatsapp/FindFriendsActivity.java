@@ -106,8 +106,9 @@ public class FindFriendsActivity extends AppCompatActivity {
         public FindFriendViewHolder(@NonNull View itemView) {
             super(itemView);
             userName=itemView.findViewById(R.id.users_profile_name);
-            userStatus=itemView.findViewById(R.id.users_status);
+            userStatus=itemView.findViewById(R.id.contact_status);
             profileImage=itemView.findViewById(R.id.users_profile_image);
+            userStatus.setVisibility(View.VISIBLE);
 
         }
     }

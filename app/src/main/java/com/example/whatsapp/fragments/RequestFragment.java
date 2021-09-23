@@ -441,10 +441,11 @@ public class RequestFragment extends Fragment {
         public RequestViewHolder(@NonNull View itemView) {
             super(itemView);
             userName=itemView.findViewById(R.id.users_profile_name);
-            userStatus=itemView.findViewById(R.id.users_status);
+            userStatus=itemView.findViewById(R.id.contact_status);
             profileImage=itemView.findViewById(R.id.users_profile_image);
            AcceptBtn=itemView.findViewById(R.id.request_accept_btn);
            CancelBtn=itemView.findViewById(R.id.request_cancel_btn);
+            userStatus.setVisibility(View.VISIBLE);
            linearLayout=itemView.findViewById(R.id.set_requests);
            linearLayout.setVisibility(View.INVISIBLE);
 

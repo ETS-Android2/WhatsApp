@@ -37,8 +37,11 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Set;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -56,6 +59,7 @@ public class ChatFragment extends Fragment {
 //    ArrayList<String> list_of_groups=new ArrayList<>();
 //    MyRecyclerViewAdapter adapter;
     DatabaseReference GroupRef;
+    private String CurrentDate,date,time;
 
     public ChatFragment() {
 
@@ -153,7 +157,7 @@ public class ChatFragment extends Fragment {
                           }
 
                        retName[0] =snapshot.child("name").getValue().toString();
-                       holder.userStatus.setText("Last Seen: "+"\n"+"Date "+" Time");
+                       holder.userStatus.setText("Date "+" Time");
                        holder.userName.setText(retName[0]);
                        String retStatus = snapshot.child("status").getValue().toString();
                        holder.contact_status.setVisibility(View.VISIBLE);
@@ -162,23 +166,43 @@ public class ChatFragment extends Fragment {
                        if (snapshot.child("userState").hasChild("state"))
                        {
                            String state = snapshot.child("userState").child("state").getValue().toString();
-                           String date = snapshot.child("userState").child("date").getValue().toString();
-                           String time = snapshot.child("userState").child("time").getValue().toString();
+                           date = snapshot.child("userState").child("date").getValue().toString();
+                           time = snapshot.child("userState").child("time").getValue().toString();
 
                            if (state.equals("online"))
                            {
+                               holder.userStatus.setVisibility(View.INVISIBLE );
                                holder.onlineIcon.setVisibility(View.VISIBLE);
                                holder.userStatus.setText("online");
                            }
                            else if (state.equals("offline"))
                            {
+                               holder.userStatus.setVisibility(View.VISIBLE );
                                holder.onlineIcon.setVisibility(View.INVISIBLE);
-                               holder.userStatus.setText("Last Seen: " + date + " " + time);
+                               Calendar calendar = Calendar.getInstance();
+                               SimpleDateFormat currentDate = new SimpleDateFormat("MMM dd, yyyy");
+                               CurrentDate = currentDate.format(calendar.getTime());
+                               if (!CurrentDate.equals(date)) {
+                                   holder.userStatus.setText(date);
+                               }else
+                               {
+                                   holder.userStatus.setText(time.toLowerCase(Locale.ROOT));
+                               }
                            }
                        }
                        else
                        {
+                           holder.userStatus.setVisibility(View.VISIBLE );
                            holder.onlineIcon.setVisibility(View.INVISIBLE);
+                           Calendar calendar = Calendar.getInstance();
+                           SimpleDateFormat currentDate = new SimpleDateFormat("MMM dd, yyyy");
+                           CurrentDate = currentDate.format(calendar.getTime());
+                           if (!CurrentDate.equals(date)) {
+                               holder.userStatus.setText(date);
+                           }else
+                           {
+                               holder.userStatus.setText(time.toLowerCase(Locale.ROOT));
+                           }
                            holder.userStatus.setText("offline");
                        }
 
@@ -226,6 +250,8 @@ public class ChatFragment extends Fragment {
             userName=itemView.findViewById(R.id.users_profile_name);
             userStatus=itemView.findViewById(R.id.users_status);
             contact_status=itemView.findViewById(R.id.contact_status);
+            contact_status.setVisibility(View.VISIBLE);
+            userStatus.setVisibility(View.VISIBLE );
             onlineIcon=itemView.findViewById(R.id.user_online);
 
         }
