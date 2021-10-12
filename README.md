@@ -11,7 +11,7 @@ The Chat applications interacts with other people using the application.
 * 24 hour stories functionality.
 * group chats for people using the application.
 * Find friends feature.
-* friend request feature to avaoid sppaming of inbox.
+* friend request feature to avoid sppaming of inbox.
 * remove or block contact.
 
  ## Screenshots
